@@ -6,4 +6,9 @@
 //  Copyright © 2018 2noobs. All rights reserved.
 //
 
-import Foundation
+
+import UIKit
+
+class LoginViewController : UIViewController {
+    
+}

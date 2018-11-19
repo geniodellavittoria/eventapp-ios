@@ -17,9 +17,10 @@
 		505FBD7D219F90A1007A0914 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505FBD7C219F90A1007A0914 /* MapKit.framework */; };
 		505FBD7F219F9100007A0914 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD7E219F9100007A0914 /* LoginViewController.swift */; };
 		505FBD81219F9115007A0914 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD80219F9115007A0914 /* RegistrationViewController.swift */; };
-		505FBD83219F9148007A0914 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD82219F9148007A0914 /* EventTableViewCell.swift */; };
 		505FBD85219F915C007A0914 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD84219F915C007A0914 /* EventTableViewController.swift */; };
 		505FBD88219F9333007A0914 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505FBD87219F9333007A0914 /* PassKit.framework */; };
+		5062DD3421A32E71000F63BD /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062DD3221A32E71000F63BD /* EventTableViewCell.swift */; };
+		5062DD3521A32E71000F63BD /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5062DD3321A32E71000F63BD /* EventTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +57,11 @@
 		505FBD7C219F90A1007A0914 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		505FBD7E219F9100007A0914 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		505FBD80219F9115007A0914 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
-		505FBD82219F9148007A0914 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		505FBD84219F915C007A0914 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		505FBD86219F9280007A0914 /* EventApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EventApp.entitlements; sourceTree = "<group>"; };
 		505FBD87219F9333007A0914 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		5062DD3221A32E71000F63BD /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		5062DD3321A32E71000F63BD /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,8 +124,9 @@
 				505FBD59219F9070007A0914 /* Info.plist */,
 				505FBD7E219F9100007A0914 /* LoginViewController.swift */,
 				505FBD80219F9115007A0914 /* RegistrationViewController.swift */,
-				505FBD82219F9148007A0914 /* EventTableViewCell.swift */,
 				505FBD84219F915C007A0914 /* EventTableViewController.swift */,
+				5062DD3221A32E71000F63BD /* EventTableViewCell.swift */,
+				5062DD3321A32E71000F63BD /* EventTableViewCell.xib */,
 			);
 			path = EventApp;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5062DD3521A32E71000F63BD /* EventTableViewCell.xib in Resources */,
 				505FBD58219F9070007A0914 /* LaunchScreen.storyboard in Resources */,
 				505FBD55219F9070007A0914 /* Assets.xcassets in Resources */,
 				505FBD53219F906E007A0914 /* Main.storyboard in Resources */,
@@ -294,10 +298,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5062DD3421A32E71000F63BD /* EventTableViewCell.swift in Sources */,
 				505FBD7F219F9100007A0914 /* LoginViewController.swift in Sources */,
 				505FBD50219F906E007A0914 /* ViewController.swift in Sources */,
 				505FBD81219F9115007A0914 /* RegistrationViewController.swift in Sources */,
-				505FBD83219F9148007A0914 /* EventTableViewCell.swift in Sources */,
 				505FBD85219F915C007A0914 /* EventTableViewController.swift in Sources */,
 				505FBD4E219F906E007A0914 /* AppDelegate.swift in Sources */,
 			);
