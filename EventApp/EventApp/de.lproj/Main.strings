@@ -1,0 +1,18 @@
+
+/* Class = "UITextField"; placeholder = "Username"; ObjectID = "7Da-JC-QLd"; */
+"7Da-JC-QLd.placeholder" = "Username";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "8vX-Gf-Mcq"; */
+"8vX-Gf-Mcq.normalTitle" = "Login";
+
+/* Class = "UITableViewController"; title = "Events"; ObjectID = "C4Z-P6-Iy8"; */
+"C4Z-P6-Iy8.title" = "Events";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Mwk-fn-0cy"; */
+"Mwk-fn-0cy.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "Ycd-ea-X0V"; */
+"Ycd-ea-X0V.normalTitle" = "Sign Up";
+
+/* Class = "UITabBarItem"; title = "All"; ObjectID = "jXx-ZS-GjG"; */
+"jXx-ZS-GjG.title" = "All";

@@ -45,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		02A4CD7F2EF2BD81A61DB0B6 /* Pods-EventAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EventAppTests/Pods-EventAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		504CD6CE21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		504CD6CF21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		505FBD4A219F906E007A0914 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505FBD4D219F906E007A0914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		505FBD4F219F906E007A0914 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				505FBD52219F906E007A0914 /* Base */,
+				504CD6CE21A4707F00F46CBE /* de */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				505FBD57219F9070007A0914 /* Base */,
+				504CD6CF21A4707F00F46CBE /* de */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -489,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -550,6 +555,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
