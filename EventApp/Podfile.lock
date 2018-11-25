@@ -1,16 +1,28 @@
 PODS:
+  - Alamofire (4.7.3)
   - Eureka (4.3.0)
+  - JSONWebToken (2.2.0)
+  - Validator (3.1.1)
 
 DEPENDENCIES:
+  - Alamofire
   - Eureka
+  - JSONWebToken
+  - Validator
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Eureka
+    - JSONWebToken
+    - Validator
 
 SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   Eureka: 6d711cb30ca333b4bc893110285a722ae3840114
+  JSONWebToken: 6fae32489632658d563dd6952a5c34020ea813e4
+  Validator: b34ab17a8fffd0c1ffd8f9002ead4d1e02cd9e6e
 
-PODFILE CHECKSUM: d7e98be44844fb572d3787ed868c4dc464700100
+PODFILE CHECKSUM: 2c94f3df17550d5c16d2dcb6475e28d77c75096e
 
 COCOAPODS: 1.5.3

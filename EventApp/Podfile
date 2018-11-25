@@ -7,6 +7,9 @@ target 'EventApp' do
 
   # Pods for EventApp
   pod 'Eureka'
+  pod 'JSONWebToken'
+  pod 'Alamofire'
+  pod 'Validator'
 
   target 'EventAppTests' do
     inherit! :search_paths
@@ -18,4 +21,16 @@ target 'EventApp' do
     # Pods for testing
   end
 
+end
+
+post_install do |installer|
+    
+    installer.pods_project.targets.each do |target|
+        
+        if target.name == 'JSONWebToken'
+            system("rm -rf Pods/JSONWebToken/CommonCrypto")
+        end
+        
+    end
+    
 end
