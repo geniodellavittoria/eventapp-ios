@@ -24,6 +24,8 @@ class LoginViewController : UIViewController {
     
     var emailRules = ValidationRuleSet<String>()
     var passwordRules = ValidationRuleSet<String>()
+    
+    
     // MARK: Functions
     
     override func viewDidLoad() {
@@ -31,7 +33,7 @@ class LoginViewController : UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         
         emailRules.add(rule: stringRequiredRule)
-        emailRules.add(rule: emailRule)
+        //emailRules.add(rule: emailRule)
         emailTextField.validationRules = emailRules
         
         passwordRules.add(rule: stringRequiredRule)
