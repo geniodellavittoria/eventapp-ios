@@ -49,7 +49,7 @@ class LoginViewController : UIViewController {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        if !emailTextField.validate().isValid {
+        /*if !emailTextField.validate().isValid {
             let alert = UIAlertController(title: "Error", message: "Field E-Mail cannot be empty", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -70,7 +70,7 @@ class LoginViewController : UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }
             
-        }
+        }*/
         
         
     }

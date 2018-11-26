@@ -35,6 +35,8 @@
 		509EF28221A9980E00E57614 /* RegisterForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF28121A9980E00E57614 /* RegisterForm.swift */; };
 		509EF28421A99B2900E57614 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF28321A99B2900E57614 /* EventController.swift */; };
 		509EF28621A9AC0600E57614 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF28521A9AC0600E57614 /* Event.swift */; };
+		8267C63621AAEE230059BF78 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267C63521AAEE230059BF78 /* EventDetailViewController.swift */; };
+		8267C63821AB37BC0059BF78 /* LocationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267C63721AB37BC0059BF78 /* LocationRow.swift */; };
 		98215E846678DA784A7A4B0A /* Pods_EventAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D345E9849A3739D7A474D005 /* Pods_EventAppTests.framework */; };
 		9CA7FD543C60411CF0548754 /* Pods_EventApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB450BF8B923B20748BC8E8 /* Pods_EventApp.framework */; };
 		DA569434ECD04ACC5DDB2A49 /* Pods_EventAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B117825D8F44D9A67CFA0474 /* Pods_EventAppUITests.framework */; };
@@ -99,6 +101,8 @@
 		5DFB78EC47FC115328CED45F /* Pods-EventAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EventAppUITests/Pods-EventAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5FB450BF8B923B20748BC8E8 /* Pods_EventApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E1C964E76B1B04323E3B29 /* Pods-EventApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-EventApp/Pods-EventApp.release.xcconfig"; sourceTree = "<group>"; };
+		8267C63521AAEE230059BF78 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
+		8267C63721AB37BC0059BF78 /* LocationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRow.swift; sourceTree = "<group>"; };
 		835972142F95DF828C2B7805 /* Pods-EventApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EventApp/Pods-EventApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B117825D8F44D9A67CFA0474 /* Pods_EventAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D345E9849A3739D7A474D005 /* Pods_EventAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +208,8 @@
 				505FBD59219F9070007A0914 /* Info.plist */,
 				505FBD7E219F9100007A0914 /* LoginViewController.swift */,
 				505FBD80219F9115007A0914 /* RegistrationViewController.swift */,
+				8267C63521AAEE230059BF78 /* EventDetailViewController.swift */,
+				8267C63721AB37BC0059BF78 /* LocationRow.swift */,
 				505FBD84219F915C007A0914 /* EventTableViewController.swift */,
 				5062DD3221A32E71000F63BD /* EventTableViewCell.swift */,
 				5062DD3321A32E71000F63BD /* EventTableViewCell.xib */,
@@ -417,6 +423,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-EventApp/Pods-EventApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
+				"${BUILT_PRODUCTS_DIR}/ImageRow/ImageRow.framework",
 				"${BUILT_PRODUCTS_DIR}/JSONWebToken/JWT.framework",
 				"${BUILT_PRODUCTS_DIR}/Validator/Validator.framework",
 			);
@@ -426,6 +433,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageRow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JWT.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Validator.framework",
 			);
@@ -519,8 +527,10 @@
 				501658B421A9D89A0041242C /* AccessTokenAdapter.swift in Sources */,
 				501658B621A9E8400041242C /* RegisterController.swift in Sources */,
 				509EF27921A98BC000E57614 /* User.swift in Sources */,
+				8267C63621AAEE230059BF78 /* EventDetailViewController.swift in Sources */,
 				509EF27621A981B100E57614 /*  Config.swift in Sources */,
 				505FBD85219F915C007A0914 /* EventTableViewController.swift in Sources */,
+				8267C63821AB37BC0059BF78 /* LocationRow.swift in Sources */,
 				501658BB21AA37DC0041242C /* FormValidation.swift in Sources */,
 				509EF28021A997E800E57614 /* LoginForm.swift in Sources */,
 				509EF28621A9AC0600E57614 /* Event.swift in Sources */,

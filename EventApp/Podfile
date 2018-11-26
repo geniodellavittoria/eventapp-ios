@@ -10,6 +10,7 @@ target 'EventApp' do
   pod 'JSONWebToken'
   pod 'Alamofire'
   pod 'Validator'
+  pod 'ImageRow', '~> 3.0'
 
   target 'EventAppTests' do
     inherit! :search_paths
