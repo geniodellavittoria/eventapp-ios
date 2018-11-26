@@ -54,7 +54,7 @@
                     <navigationItem key="navigationItem" id="lMA-u9-gtO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="qXz-Yf-qqc">
                             <connections>
-                                <segue destination="itO-wD-Uex" kind="showDetail" id="Te6-Mw-f4b"/>
+                                <segue destination="itO-wD-Uex" kind="show" id="Te6-Mw-f4b"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
