@@ -7,6 +7,6 @@
 //
 
 
-class EventController : RestController<Event> {
+class EventController : RestController {
     
 }

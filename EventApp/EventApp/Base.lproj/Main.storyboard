@@ -160,7 +160,6 @@
                                 </state>
                                 <connections>
                                     <action selector="login:" destination="c1m-cq-lAF" eventType="touchUpInside" id="3Uj-bp-9SW"/>
-                                    <segue destination="obe-dD-Ke3" kind="presentation" id="Eb2-IG-apx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -171,6 +170,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="7Da-JC-QLd" id="RpT-XJ-2oe"/>
                         <outlet property="passwordTextField" destination="Mwk-fn-0cy" id="93v-CL-3nd"/>
+                        <segue destination="obe-dD-Ke3" kind="presentation" identifier="loginSegue" id="Xhh-Du-A6h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sIM-PJ-pwr" userLabel="First Responder" sceneMemberID="firstResponder"/>

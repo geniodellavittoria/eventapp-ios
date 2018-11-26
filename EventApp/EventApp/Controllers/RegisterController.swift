@@ -7,7 +7,7 @@
 //
 
 
-class RegisterController : RestController<RegisterForm> {
+class RegisterController : RestController {
     
     
 }

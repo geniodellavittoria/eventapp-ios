@@ -30,13 +30,14 @@ extension DataRequest {
             }
             return .success(responseObject)
         }
+        print("datarequest")
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
     
     /// @Returns - DataRequest
     /// completionHandler handles JSON Array [T]
     @discardableResult func responseCollection<T: Decodable>(
-        queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<[T]>) -> Void
+        queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<[T]>) -> ()
         ) -> Self{
         
         let responseSerializer = DataResponseSerializer<[T]>{ request, response, data, error in

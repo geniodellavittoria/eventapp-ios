@@ -32,6 +32,9 @@ class LoginViewController : UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         
+        emailTextField.text = "admin"
+        passwordTextField.text = "admin"
+        
         emailRules.add(rule: stringRequiredRule)
         //emailRules.add(rule: emailRule)
         emailTextField.validationRules = emailRules
@@ -49,7 +52,7 @@ class LoginViewController : UIViewController {
     }
     
     @IBAction func login(_ sender: UIButton) {
-        /*if !emailTextField.validate().isValid {
+        if !emailTextField.validate().isValid {
             let alert = UIAlertController(title: "Error", message: "Field E-Mail cannot be empty", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -63,15 +66,23 @@ class LoginViewController : UIViewController {
 
         
         let loginForm = LoginForm(username: emailTextField.text!, password: passwordTextField.text!)
-        userController.authenticate(loginForm: loginForm) { success in
+   
+        
+        userController.authenticate(loginForm: loginForm, completion: { (success) in
+            print("loginviewcontroler")
             if !success {
-                let alert = UIAlertController(title: "Error", message: "Could not login.", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                print("Login failed")
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Could not login.", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+            } else {
+                self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
             
-        }*/
-        
+        })
         
     }
 }
