@@ -34,28 +34,45 @@ class RestController {
         
     }*/
     
-    func getAll() throws -> DataRequest {
+    func getAll<Res: Decodable>(resource: String, response: Res.Type, onSuccess: @escaping ([Res]) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
-            throw RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource)
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
         }
-        return Alamofire.request(url, method: .get)
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        Alamofire.request(request)
+            .responseCollection(completionHandler: { (response: DataResponse<[Res]>) in
+                onSuccess(response.value! as [Res])
+            })
     }
     
-    func get<T, R>(resource: String, response: R.Type, doOnSuccess: @escaping (T) -> Void, doOnError: @escaping (Error) -> Void) throws -> DataRequest {
+    func getAll<Res: Decodable>(response: Res.Type, onSuccess: @escaping ([Res]) -> Void, onError: @escaping (Error) -> Void) {
+        getAll(resource: self.resource, response: response, onSuccess: onSuccess, onError: onError)
+    }
+    
+    
+    
+    func get<Res: Decodable>(resource: String, response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
-            throw RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource)
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
         }
-        return Alamofire.request(url, method: .get)
-            /*.validate()
-            .responseJSON(completionHandler: { response in
-                if let json = response.result.value {
-                    print("JSON: \(json)") // serialized json response
-                }
-                
-                if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
-                    print("Data: \(utf8Text)") // original server data as UTF8 string
-                }
-            })*/
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        Alamofire.request(request)
+            .responseObject(completionHandler: { (response: DataResponse<Res>) in
+                onSuccess(response.value! as Res)
+            })
+
+    }
+    
+    func get<Res: Decodable>(response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
+        get(resource: self.resource, response: response, onSuccess: onSuccess, onError: onError)
     }
     
     /*func get<T>(id: String) {
@@ -66,7 +83,7 @@ class RestController {
         post(resource: resource, body: body)
     }*/
     
-    func post<Req: Encodable, Res: Codable>(resource: String, _ body: Req, response: Res.Type, onSuccess: @escaping (_ response: Res) -> Void, onError: @escaping (_ err: Error) -> Void) {
+    func post<Req: Encodable, Res: Decodable>(resource: String, _ body: Req, response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
             onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
             return
@@ -78,16 +95,16 @@ class RestController {
         request.httpBody = try! encoder.encode(body)
 
         Alamofire.request(request)
-            .responseObject(completionHandler: { (response: DataResponse<JwtToken>) in
-                onSuccess(response.value as! Res)
+            .responseObject(completionHandler: { (response: DataResponse<Res>) in
+                onSuccess(response.value! as Res)
         })
-        print("restcontroller")
         
     }
     
-    func put<T: Encodable>(resource: String, _ body: T) throws -> DataRequest {
+    func put<Req: Encodable, Res: Decodable>(_ resource: String, _ body: Req, response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
-            throw RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource)
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
         }
         
         var request = URLRequest(url: url)
@@ -95,18 +112,25 @@ class RestController {
         request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
         request.httpBody = try! encoder.encode(body)
         
-        return Alamofire.request(request)
+        Alamofire.request(request)
+            .responseObject(completionHandler: { (response: DataResponse<Res>) in
+                onSuccess(response.value! as Res)
+            })
     }
     
     /*func put(body: T) {
         put(resource: resource, body: body)
     }*/
     
-    func delete(resource: String) throws -> DataRequest {
+    func delete<Res: Decodable>(resource: String, onSuccess: @escaping (Res) -> Void, onError: @escaping(Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
-            throw RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource)
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
         }
-        return Alamofire.request(url, method: .delete)
+        Alamofire.request(url, method: .delete)
+            .responseObject(completionHandler: { (response: DataResponse<Res>) in
+                onSuccess(response.value! as Res)
+            })
     }
     
     func setHeaders(request: URLRequest) {

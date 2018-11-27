@@ -16,20 +16,13 @@ class CategoryController : RestController {
         super.init(resource: "categories")
     }
     
-    func getCategories() -> [Category] {
-        do {
-            try super.getAll()
-                .responseObject { (response: DataResponse<[Category]>) in
-                    
-                    if let categories = response.value {
-                        //return categories
-                    }
-            }
-        } catch  {
-            print("Could not authenticate")
-        }
-        return []
-        //completion([])
+    func getCategories(onSuccess: @escaping ([Category]) -> Void, onError: @escaping (Error) -> Void) {
+        super.getAll(response: Category.self, onSuccess: { categories in
+            onSuccess(categories)
+        }, onError: { error in
+            print("Could not get any categoires")
+            onError(error)
+        })
     }
     
 }
