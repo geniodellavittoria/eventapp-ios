@@ -25,6 +25,7 @@
 		505FBD81219F9115007A0914 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD80219F9115007A0914 /* RegistrationViewController.swift */; };
 		505FBD85219F915C007A0914 /* EventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD84219F915C007A0914 /* EventTableViewController.swift */; };
 		505FBD88219F9333007A0914 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 505FBD87219F9333007A0914 /* PassKit.framework */; };
+		5061BE2721ADF59F0068D39E /* EventDetailCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5061BE2621ADF59F0068D39E /* EventDetailCategory.swift */; };
 		5062DD3421A32E71000F63BD /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5062DD3221A32E71000F63BD /* EventTableViewCell.swift */; };
 		5062DD3521A32E71000F63BD /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5062DD3321A32E71000F63BD /* EventTableViewCell.xib */; };
 		509EF27621A981B100E57614 /*  Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509EF27521A981B100E57614 /*  Config.swift */; };
@@ -90,6 +91,7 @@
 		505FBD84219F915C007A0914 /* EventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewController.swift; sourceTree = "<group>"; };
 		505FBD86219F9280007A0914 /* EventApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EventApp.entitlements; sourceTree = "<group>"; };
 		505FBD87219F9333007A0914 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		5061BE2621ADF59F0068D39E /* EventDetailCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailCategory.swift; sourceTree = "<group>"; };
 		5062DD3221A32E71000F63BD /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		5062DD3321A32E71000F63BD /* EventTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		509EF27521A981B100E57614 /*  Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " Config.swift"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				509EF28521A9AC0600E57614 /* Event.swift */,
 				501658AB21A9BFC70041242C /* JwtToken.swift */,
 				50F1116C21AC6F1F00022DDD /* Category.swift */,
+				5061BE2621ADF59F0068D39E /* EventDetailCategory.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				505FBD7F219F9100007A0914 /* LoginViewController.swift in Sources */,
 				501658AC21A9BFC70041242C /* JwtToken.swift in Sources */,
 				509EF28221A9980E00E57614 /* RegisterForm.swift in Sources */,
+				5061BE2721ADF59F0068D39E /* EventDetailCategory.swift in Sources */,
 				509EF27E21A993AA00E57614 /* UserController.swift in Sources */,
 				509EF28421A99B2900E57614 /* EventController.swift in Sources */,
 				505FBD50219F906E007A0914 /* ViewController.swift in Sources */,

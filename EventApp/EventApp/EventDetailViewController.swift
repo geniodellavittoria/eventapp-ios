@@ -14,19 +14,13 @@ import CoreLocation
 class EventDetailViewController: FormViewController {
 
     var category = ""
-    var categoryOptions: [String] = []
+    var categoryOptions: [Category] = []
     
     let categoryController: CategoryController = CategoryController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        categoryController.getCategories(onSuccess: { categories in
-            self.categoryOptions = categories.map({ $0.name })
-        }, onError: { error in
-            print(error)
-        })
-
         // Do any additional setup after loading the view.
         
         form +++
@@ -47,11 +41,19 @@ class EventDetailViewController: FormViewController {
             <<< PushRow<String>() {
                 $0.title = "Category"
                 $0.value = category
-                $0.options = categoryOptions
+                $0.options = categoryOptions.map({ $0.name })
                 $0.onChange { [unowned self] row in
                     if let value = row.value {
                         self.category = value
                     }
+                }
+                    .cellUpdate { cell, row in
+                        self.categoryController.getCategories(onSuccess: { categories in
+                            self.categoryOptions = categories //.map({ EventDetailCategory(id: $0.id, value: $0.name) })
+                            row.options = self.categoryOptions.map({ $0.name })
+                        }, onError: { error in
+                            print(error)
+                        })
                 }
             }
             
