@@ -33,7 +33,6 @@ class EventDetailViewController: FormViewController {
             <<< TextRow("Title").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
                 }.onChange { row in
-                    print(self.navigationItem.title)
                     self.navigationItem.title = row.value
             }
             
