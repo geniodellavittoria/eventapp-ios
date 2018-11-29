@@ -41,24 +41,14 @@ class UserController : RestController {
         })
     }
     
-    func register(registerForm: RegisterForm) {
+    func register(registerForm: RegisterForm, completion: @escaping (Bool) -> Void) {
         
         super.post(resource: "register", registerForm, response: JwtToken.self, onSuccess: { response in
-            
+            completion(true)
         }, onError: { error in
             print("Could not register")
+            completion(false)
         })
-        /*.responseObject { (response: DataResponse<JwtToken>) in
-         if let jwt = response.value {
-         accessTokenAdapter.setAccessToken(accessToken: jwt.id_token)
-         do {
-         let claims: ClaimSet = try JWT.decode(jwt.id_token, algorithm: .hs512(Data(base64Encoded: Config.jwtSecret)!))
-         print(claims)
-         } catch {
-         print("Failed to decode JWT: \(error)")
-         }
-         }
-         }*/
         
     }
     

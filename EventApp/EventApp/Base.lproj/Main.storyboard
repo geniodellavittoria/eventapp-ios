@@ -90,7 +90,11 @@
                         <viewLayoutGuide key="safeArea" id="6wt-Mt-DTl"/>
                     </view>
                     <navigationItem key="navigationItem" id="hMC-Yk-RZn">
-                        <barButtonItem key="rightBarButtonItem" title="Register" id="lSI-lD-20r"/>
+                        <barButtonItem key="rightBarButtonItem" title="Register" id="lSI-lD-20r">
+                            <connections>
+                                <action selector="RegisterUser:" destination="jyU-X5-Gbi" id="Z5n-Be-2G6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>

@@ -32,6 +32,9 @@ class EventDetailViewController: FormViewController {
             
             <<< TextRow("Title").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
+                }.onChange { row in
+                    print(self.navigationItem.title)
+                    self.navigationItem.title = row.value
             }
             
             <<< TextRow("Location").cellSetup {
@@ -50,7 +53,7 @@ class EventDetailViewController: FormViewController {
                     .cellUpdate { cell, row in
                         self.categoryController.getCategories(onSuccess: { categories in
                             self.categoryOptions = categories //.map({ EventDetailCategory(id: $0.id, value: $0.name) })
-                            row.options = self.categoryOptions.map({ $0.name })
+                            row.options = self.categoryOptions.map({ $0.name }).sorted()
                         }, onError: { error in
                             print(error)
                         })

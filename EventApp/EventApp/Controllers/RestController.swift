@@ -101,6 +101,25 @@ class RestController {
         
     }
     
+    func post<Req: Encodable>(resource: String, _ body: Req, onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+        guard let url = URL(string: endpointUrl + resource) else {
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.post.rawValue
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try! encoder.encode(body)
+        
+        Alamofire.request(request)
+        .response(completionHandler: { response in
+            print(response)
+            onSuccess()
+        })
+        
+    }
+    
     func put<Req: Encodable, Res: Decodable>(_ resource: String, _ body: Req, response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
             onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))

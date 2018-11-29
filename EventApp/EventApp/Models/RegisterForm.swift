@@ -8,9 +8,10 @@
 
 
 class RegisterForm : Codable {
-    var username: String?
+    var login: String?
     var firstName: String?
     var lastName: String?
     var email: String?
     var password: String?
+    var confirmPassword: String?
 }
