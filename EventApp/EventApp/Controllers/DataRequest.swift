@@ -25,6 +25,7 @@ extension DataRequest {
             // (1)- Json Decoder. Decodes the data object into expected type T
             // throws error when failes
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             guard let responseObject = try? decoder.decode(T.self, from: jsonData)else{
                 return .failure(BackendError.objectSerialization(reason: "JSON object could not be serialized \(String(data: jsonData, encoding: .utf8)!)"))
             }
@@ -49,6 +50,7 @@ extension DataRequest {
             }
             
             let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
             guard let responseArray = try? decoder.decode([T].self, from: jsonData)else{
                 return .failure(BackendError.objectSerialization(reason: "JSON array could not be serialized \(String(data: jsonData, encoding: .utf8)!)"))
             }

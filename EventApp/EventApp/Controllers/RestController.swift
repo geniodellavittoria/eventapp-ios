@@ -17,7 +17,7 @@ class RestController {
     var resource : String;
     
     let encoder = JSONEncoder()
-    let decoder = JSONEncoder()
+    let decoder = JSONDecoder()
     
     var defaultHeader: HTTPHeaders = [
         "Content-Type": "application/json",
@@ -28,6 +28,8 @@ class RestController {
         endpointUrl = Config.backendUrl
         self.resource = resource
         sessionManager.adapter = accessTokenAdapter
+        
+        decoder.dateDecodingStrategy = .iso8601
     }
     
     /*func getAll<T>(resource: String) {
