@@ -174,10 +174,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0gz-KV-Asm"/>
                     </view>
+                    <navigationItem key="navigationItem" id="mEE-MI-bNN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8i-iO-mvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1462" y="1917"/>
+            <point key="canvasLocation" x="2465" y="1889"/>
         </scene>
         <!--Events-->
         <scene sceneID="2u2-dJ-wb8">
@@ -195,6 +196,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="hsJ-Qx-Emb" kind="show" id="k2s-eN-Ubb"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -203,7 +207,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Events" id="17T-88-kNp">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QXE-bV-cYn"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QXE-bV-cYn">
+                            <connections>
+                                <segue destination="wZj-BO-5ri" kind="show" id="2Qo-N6-I3t"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="0xo-14-xWg" id="PGw-Ib-buJ"/>
@@ -244,12 +252,33 @@
                     <tabBarItem key="tabBarItem" title="Events" id="uux-tH-8B3"/>
                     <connections>
                         <segue destination="5CN-mB-Oto" kind="relationship" relationship="masterViewController" id="9XG-D0-Ous"/>
-                        <segue destination="wZj-BO-5ri" kind="relationship" relationship="detailViewController" id="PAX-91-fWu"/>
+                        <segue destination="hsJ-Qx-Emb" kind="relationship" relationship="detailViewController" id="liF-eb-sz0"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="723-zC-RSP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="466" y="1545"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="PF5-Fw-lhs">
+            <objects>
+                <navigationController id="hsJ-Qx-Emb" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="E0j-mA-1xQ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="O6G-Xi-c3L">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="wZj-BO-5ri" kind="relationship" relationship="rootViewController" id="3Gx-et-z6y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lT3-XK-4am" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1462" y="1889"/>
+        </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="liF-eb-sz0"/>
+        <segue reference="2Qo-N6-I3t"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -18,6 +18,8 @@ class EventDetailViewController: FormViewController {
     
     let categoryController: CategoryController = CategoryController()
     
+    var detailEvent: Event?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
