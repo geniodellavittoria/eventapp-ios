@@ -15,6 +15,7 @@ class EventController : RestController {
     
     func getEvents(onSuccess: @escaping ([Event]) -> Void, onError: @escaping (Error) -> Void) {
         getAll(response: Event.self, onSuccess: { events in
+            onSuccess(events)
             print(events)
         }, onError: { error in
             print(error)
