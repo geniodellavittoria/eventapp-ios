@@ -144,7 +144,14 @@ class EventTableViewController : UITableViewController,
         
         cell.eventTitleLbl?.text = event.name
         cell.eventCategoryLbl?.text  = event.category?.name
-        cell.eventPriceLbl?.text = String(format:"%f", event.price!)
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        if let formattedPrice = formatter.string(from: event.price! as NSNumber)
+        {
+            cell.eventPriceLbl?.text = formattedPrice
+        }
+        
         //cell.eventImage =  UIImage(named: event.eventImage)
         return cell
     }
