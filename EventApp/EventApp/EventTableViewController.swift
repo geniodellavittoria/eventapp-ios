@@ -10,11 +10,9 @@ import UIKit
 
 class EventTableViewController : UITableViewController,
  UISearchControllerDelegate {
-    //@IBOutlet var tableView: UITableView!
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
-    
     
     private var filteredEventList = [Event]()
     private var eventList = [Event]()
@@ -25,13 +23,14 @@ class EventTableViewController : UITableViewController,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
         
         eventController.getEvents(onSuccess: { events in
             self.eventList = events
+            self.tableView.reloadData()
         }, onError: { error in
             print("could not load any events")
         })
-        
         //searchController = UISearchController(searchResultsController: resultsTableController)
         
         //searchController.searchResultsUpdater = self
@@ -69,6 +68,7 @@ class EventTableViewController : UITableViewController,
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
         super.viewWillAppear(animated)
     }
@@ -138,12 +138,19 @@ class EventTableViewController : UITableViewController,
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
+
         let event = eventList[indexPath.row]
-        cell.textLabel?.text = event.name
         
+        cell.eventTitleLbl?.text = event.name
+        cell.eventCategoryLbl?.text  = event.category?.name
+        cell.eventPriceLbl?.text = String(format:"%f", event.price!)
+        //cell.eventImage =  UIImage(named: event.eventImage)
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,6 +160,7 @@ class EventTableViewController : UITableViewController,
         }*/
         
         //searchFooter.setNotFiltering()
+        print(eventList.count)
         return eventList.count
     }
     

@@ -10,6 +10,16 @@ import UIKit
 
 class EventTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var eventTimeToLbl: UILabel!
+    
+    @IBOutlet weak var eventTimeFromLbl: UILabel!
+    @IBOutlet weak var eventPriceLbl: UILabel!
+    @IBOutlet weak var eventCategoryLbl: UILabel!
+    @IBOutlet weak var eventImage: UIImageView!
+    @IBOutlet weak var evenLocationLbl: UILabel!
+    @IBOutlet weak var eventTitleLbl: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +30,7 @@ class EventTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
     
 }
