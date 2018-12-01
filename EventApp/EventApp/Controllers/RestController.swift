@@ -47,10 +47,13 @@ class RestController {
         
         Alamofire.request(request)
             .responseCollection(completionHandler: { (response: DataResponse<[Res]>) in
-                if (response.value?.count == nil) {
-                    onSuccess([] as [Res])
-                } else {
-                    onSuccess(response.value! as [Res])
+                print(response.result)
+                switch response.result {
+                case .failure(let error):
+                    onError(error)
+                    
+                case .success(let resArr):
+                    onSuccess(resArr as [Res])
                 }
             })
     }
