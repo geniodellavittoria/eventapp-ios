@@ -37,6 +37,7 @@ class EventTableViewController : UITableViewController,
         
         eventController.getEvents(onSuccess: { events in
             self.eventList = events
+            self.filteredEventList = events
             self.tableView.reloadData()
         }, onError: { error in
             print("could not load any events")
@@ -135,8 +136,7 @@ class EventTableViewController : UITableViewController,
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         
-        
-        let event = eventList[indexPath.row]
+        let event = filteredEventList[indexPath.row]
         cell.eventImage?.image = getBase64DecodedImage(event.eventImage)
         cell.eventTitleLbl?.text = event.name
         cell.eventCategoryLbl?.text  = event.category?.name
@@ -173,7 +173,7 @@ class EventTableViewController : UITableViewController,
     // MARK: - Search bar
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !(searchBar.text != nil) != nil else {
+        guard !(searchBar.text?.isEmpty ?? false) else {
             filteredEventList = eventList
             tableView.reloadData()
             return
