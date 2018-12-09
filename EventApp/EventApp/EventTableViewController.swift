@@ -24,8 +24,13 @@ class EventTableViewController : UITableViewController,
     private let searchController = UISearchController(searchResultsController: nil)
     //var resultsTableController: ResultsTableController?
     
+    let formatter = DateFormatter()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
         tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
         
         tableView.delegate = self
@@ -129,11 +134,15 @@ class EventTableViewController : UITableViewController,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
-
+        
+        
         let event = eventList[indexPath.row]
         cell.eventImage?.image = getBase64DecodedImage(event.eventImage)
         cell.eventTitleLbl?.text = event.name
         cell.eventCategoryLbl?.text  = event.category?.name
+        cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)
+        cell.eventTimeToLbl.text = self.formatter.string(from: event.eventEnd!)
+        
         let formatter = NumberFormatter()
         formatter.locale = Locale.current
         formatter.numberStyle = .currency

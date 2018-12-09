@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 struct Event: Codable {
-    var id: CLong
+    var id: CLong?
     var name: String
     var description: String?
     var longitude: Double?
@@ -23,4 +23,7 @@ struct Event: Codable {
     var category: Category?
     //var impression: [UIImage]?
     
+    init(name: String) {
+        self.name = name
+    }
 }
