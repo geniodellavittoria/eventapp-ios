@@ -44,6 +44,7 @@
 		50F1116D21AC6F1F00022DDD /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F1116C21AC6F1F00022DDD /* Category.swift */; };
 		8267C63621AAEE230059BF78 /* EventDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267C63521AAEE230059BF78 /* EventDetailViewController.swift */; };
 		8267C63821AB37BC0059BF78 /* LocationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8267C63721AB37BC0059BF78 /* LocationRow.swift */; };
+		826E374421BDB07900419519 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826E374321BDB07900419519 /* LocationManager.swift */; };
 		98215E846678DA784A7A4B0A /* Pods_EventAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D345E9849A3739D7A474D005 /* Pods_EventAppTests.framework */; };
 		9CA7FD543C60411CF0548754 /* Pods_EventApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FB450BF8B923B20748BC8E8 /* Pods_EventApp.framework */; };
 		DA569434ECD04ACC5DDB2A49 /* Pods_EventAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B117825D8F44D9A67CFA0474 /* Pods_EventAppUITests.framework */; };
@@ -117,6 +118,7 @@
 		61E1C964E76B1B04323E3B29 /* Pods-EventApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-EventApp/Pods-EventApp.release.xcconfig"; sourceTree = "<group>"; };
 		8267C63521AAEE230059BF78 /* EventDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailViewController.swift; sourceTree = "<group>"; };
 		8267C63721AB37BC0059BF78 /* LocationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRow.swift; sourceTree = "<group>"; };
+		826E374321BDB07900419519 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		835972142F95DF828C2B7805 /* Pods-EventApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EventApp/Pods-EventApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B117825D8F44D9A67CFA0474 /* Pods_EventAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D345E9849A3739D7A474D005 /* Pods_EventAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +229,7 @@
 				8267C63521AAEE230059BF78 /* EventDetailViewController.swift */,
 				8267C63721AB37BC0059BF78 /* LocationRow.swift */,
 				505FBD84219F915C007A0914 /* EventTableViewController.swift */,
+				826E374321BDB07900419519 /* LocationManager.swift */,
 				5062DD3221A32E71000F63BD /* EventTableViewCell.swift */,
 				5062DD3321A32E71000F63BD /* EventTableViewCell.xib */,
 				509EF27521A981B100E57614 /*  Config.swift */,
@@ -538,6 +541,7 @@
 			files = (
 				50E2B18321B03D5A0071DE51 /* SettingsController.swift in Sources */,
 				5062DD3421A32E71000F63BD /* EventTableViewCell.swift in Sources */,
+				826E374421BDB07900419519 /* LocationManager.swift in Sources */,
 				505FBD7F219F9100007A0914 /* LoginViewController.swift in Sources */,
 				501658AC21A9BFC70041242C /* JwtToken.swift in Sources */,
 				509EF28221A9980E00E57614 /* RegisterForm.swift in Sources */,

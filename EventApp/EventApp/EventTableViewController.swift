@@ -8,14 +8,14 @@
 
 import UIKit
 import Foundation
+import CoreLocation
 
 //UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating
 class EventTableViewController : UITableViewController,
- UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
-    
     private var filteredEventList = [Event]()
     private var eventList = [Event]()
     
@@ -25,10 +25,12 @@ class EventTableViewController : UITableViewController,
     //var resultsTableController: ResultsTableController?
     
     let formatter = DateFormatter()
-    
+    let locationManager = LocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.startTracking()     
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
@@ -36,7 +38,7 @@ class EventTableViewController : UITableViewController,
         tableView.delegate = self
         
         eventController.getEvents(onSuccess: { events in
-            self.eventList = events
+            self.eventList = self.getEventsNear(events: events)
             self.filteredEventList = events
             self.tableView.reloadData()
         }, onError: { error in
@@ -235,7 +237,17 @@ class EventTableViewController : UITableViewController,
             return UIImage(data: decodedData!)!
         }
         return UIImage()
-        
+    }
+    
+    func getEventsNear(events: [Event]) -> [Event]{
+        var nearEvents: [Event] = []
+        for event in events {
+            let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
+            if(locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location) < 5000){
+                nearEvents.append(event)
+            }
+        }
+        return nearEvents
     }
  
 }
