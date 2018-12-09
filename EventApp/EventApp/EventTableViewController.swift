@@ -65,10 +65,6 @@ class EventTableViewController : UITableViewController,
         
         tableView.tableFooterView = searchFooter
         
-        //resultsTableController = ResultsTableController()
-        
-        //resultsTableController.tableView.delegate = self
-        
         searchController.delegate = self
         searchController.dimsBackgroundDuringPresentation = false // The default is true.
         //searchController.searchBar.delegate = self // Monitor when the search button is tapped.
@@ -91,8 +87,11 @@ class EventTableViewController : UITableViewController,
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+        if splitViewController!.isCollapsed {
+            if let selectionIndexPath = tableView.indexPathForSelectedRow {
+                tableView.deselectRow(at: selectionIndexPath, animated: animated)
+            }
+        }
         super.viewWillAppear(animated)
     }
     
@@ -116,7 +115,7 @@ class EventTableViewController : UITableViewController,
                 print("indexPath " + String(indexPath.item))
                 //let object = objects[indexPath.row] as! NSDate
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
-                //controller.detailEvent = object
+                controller.detailEvent = filteredEventList[indexPath.item]
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -160,12 +159,8 @@ class EventTableViewController : UITableViewController,
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
-            //searchFooter.setIsFilteringToShow(filteredItemCount: filteredEventList.count, of: eventList.count)
             return filteredEventList.count
         }
-        
-        //searchFooter.setNotFiltering()
-        print(eventList.count)
         return eventList.count
     }
     
@@ -226,21 +221,6 @@ class EventTableViewController : UITableViewController,
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
-    }
-
-    
-    func updateSearchResultsForSearchController(searchController: UISearchController)
-    {
-        filterSearchController(searchController.searchBar)
-    }
-    
-    func filterSearchController(_ searchBar: UISearchBar) {
-        let searchText = searchBar.text ?? ""
-        filteredEventList = eventList.filter { event in
-            let isMatchingSearchText = event.name.lowercased().contains(searchText.lowercased()) || searchText.count == 0
-            return isMatchingSearchText
-        }
-        tableView.reloadData()
     }
     
     // MARK: - Custom functions

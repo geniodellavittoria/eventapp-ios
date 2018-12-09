@@ -220,7 +220,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="hsJ-Qx-Emb" kind="showDetail" identifier="showDetail" id="k2s-eN-Ubb"/>
+                                    <segue destination="hsJ-Qx-Emb" kind="showDetail" identifier="showDetail" id="PmG-6k-aKl"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -301,7 +301,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="k2s-eN-Ubb"/>
+        <segue reference="PmG-6k-aKl"/>
         <segue reference="2Qo-N6-I3t"/>
     </inferredMetricsTieBreakers>
 </document>
