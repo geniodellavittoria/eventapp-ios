@@ -49,6 +49,22 @@
             </objects>
             <point key="canvasLocation" x="222" y="390"/>
         </scene>
+        <!--Item-->
+        <scene sceneID="K0C-Es-JAR">
+            <objects>
+                <viewController id="du5-BH-QPg" customClass="PayViewController" customModule="EventApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ryr-fN-xPH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="9K6-oP-OF2"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="8b1-tb-19D"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hb0-g9-bq0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1583" y="1163"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PwW-7d-WA7">
             <objects>
@@ -60,8 +76,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="lwf-1u-u1R" kind="relationship" relationship="viewControllers" id="LtS-TQ-erC"/>
                         <segue destination="TJW-jF-PAd" kind="relationship" relationship="viewControllers" id="ofo-Ll-aGj"/>
+                        <segue destination="lwf-1u-u1R" kind="relationship" relationship="viewControllers" id="LtS-TQ-erC"/>
+                        <segue destination="du5-BH-QPg" kind="relationship" relationship="viewControllers" id="LSb-J5-hws"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Yt-Iu-wYt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -122,7 +139,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="7Da-JC-QLd" id="RpT-XJ-2oe"/>
                         <outlet property="passwordTextField" destination="Mwk-fn-0cy" id="93v-CL-3nd"/>
-                        <segue destination="obe-dD-Ke3" kind="presentation" identifier="loginSegue" id="Xhh-Du-A6h"/>
+                        <segue destination="obe-dD-Ke3" kind="showDetail" identifier="loginSegue" id="Xhh-Du-A6h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sIM-PJ-pwr" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -174,7 +191,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="0gz-KV-Asm"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mEE-MI-bNN"/>
+                    <navigationItem key="navigationItem" id="mEE-MI-bNN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UAB-RH-202">
+                            <connections>
+                                <action selector="SaveEvent:" destination="wZj-BO-5ri" id="KOy-73-7OO"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8i-iO-mvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -197,7 +220,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="hsJ-Qx-Emb" kind="show" id="k2s-eN-Ubb"/>
+                                    <segue destination="hsJ-Qx-Emb" kind="showDetail" identifier="showDetail" id="k2s-eN-Ubb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -209,7 +232,7 @@
                     <navigationItem key="navigationItem" title="Events" id="17T-88-kNp">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QXE-bV-cYn">
                             <connections>
-                                <segue destination="wZj-BO-5ri" kind="show" id="2Qo-N6-I3t"/>
+                                <segue destination="wZj-BO-5ri" kind="showDetail" id="2Qo-N6-I3t"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

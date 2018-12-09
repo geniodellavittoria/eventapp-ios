@@ -53,12 +53,12 @@ class LoginViewController : UIViewController {
     
     @IBAction func login(_ sender: UIButton) {
         if !emailTextField.validate().isValid {
-            let alert = UIAlertController(title: "Error", message: "Field E-Mail cannot be empty", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Error", message: "Field E-Mail not valid", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
         if !passwordTextField.validate().isValid {
-            let alert = UIAlertController(title: "Error", message: "Field Password cannot be empty", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Error", message: "Field Password not valid", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return

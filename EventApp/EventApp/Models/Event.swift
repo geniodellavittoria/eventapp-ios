@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Event: Codable {
     var id: CLong
@@ -18,8 +19,8 @@ struct Event: Codable {
     var timestamp: Date?
     var eventStart: Date?
     var eventEnd: Date?
-    var eventImage: Data?
+    var eventImage: String?
     var category: Category?
-    var impression: [Data]?
+    //var impression: [UIImage]?
     
 }

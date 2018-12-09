@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import CoreLocation
 
 class SettingsController: FormViewController {
 
@@ -15,13 +16,15 @@ class SettingsController: FormViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         form +++ Section("Section1")
-            <<< TextRow(){
-                $0.tag = "login"
-                $0.title = "Username"
-                $0.placeholder = "Enter text here"
+            <<< SwitchRow() {
+                $0.title = "GPS enabled"
+            }
+            <<< LocationRow(){
+                $0.tag = "location"
+                $0.title = "Location"
+                $0.value = CLLocation(latitude: -34.91, longitude: -56.1646)
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnChangeAfterBlurred
-                
         }
         
     }

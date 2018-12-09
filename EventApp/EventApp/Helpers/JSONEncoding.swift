@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension DateFormatter {
     static let iso8601Full: DateFormatter = {
@@ -17,4 +18,18 @@ extension DateFormatter {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+}
+
+/*extension UIImage {
+    convenience init?(base64 str: String) {
+        guard let data = try? Data(base64Encoded: str),
+            UIImage(data: data) != nil else { return nil }
+        self.init(data: data)!
+    }
+}*/
+extension UIImage {
+    func toBase64() -> String? {
+        guard let imageData = self.pngData() else { return nil }
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+    }
 }

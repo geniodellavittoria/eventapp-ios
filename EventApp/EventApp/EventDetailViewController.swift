@@ -25,11 +25,11 @@ class EventDetailViewController: FormViewController {
         
         // Do any additional setup after loading the view.
         
-        form +++
-            
-            ImageRow() { row in
-                row.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
-                row.clearAction = .yes(style: UIAlertAction.Style.destructive)
+        form +++ Section("Infos")
+            <<< ImageRow() {
+                $0.title = "Event Image"
+                $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
+                $0.clearAction = .yes(style: UIAlertAction.Style.destructive)
             }
             
             <<< TextRow("Title").cellSetup { cell, row in
@@ -61,8 +61,13 @@ class EventDetailViewController: FormViewController {
                 }
             }
             
-            +++
-            Section()
+            form +++ Section("Description")
+            <<< TextAreaRow() {
+                $0.tag = "description"
+                $0.placeholder = "Description"
+            }
+            
+            form +++ Section("Details")
             <<< DateTimeRow("Starts") {
                 $0.title = $0.tag
                 $0.value = Date().addingTimeInterval(60*60*24)
@@ -77,6 +82,12 @@ class EventDetailViewController: FormViewController {
                 $0.value = CLLocation(latitude: -34.91, longitude: -56.1646)
         }
         
+    }
+    @IBAction func SaveEvent(_ sender: UIBarButtonItem) {
+        
+        if let navController = self.navigationController {
+            navController.popViewController(animated: true)
+        }
     }
 }
 
