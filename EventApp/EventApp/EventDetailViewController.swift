@@ -12,7 +12,9 @@ import ImageRow
 import CoreLocation
 
 class EventDetailViewController: FormViewController {
-
+    let saveBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
+    let registerBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
+    
     var category = ""
     var categoryOptions: [Category] = []
     
@@ -26,12 +28,11 @@ class EventDetailViewController: FormViewController {
         super.viewDidLoad()
         
         if (isUserOwner()) {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
+            self.navigationItem.rightBarButtonItem = saveBarButtonItem
+        } else if (viewMode) {
+            self.navigationItem.rightBarButtonItem = registerBarButtonItem
         }
-        if (viewMode) {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
-            
-        }
+        
         print(detailEvent)
         
         // Do any additional setup after loading the view.
@@ -96,6 +97,7 @@ class EventDetailViewController: FormViewController {
     }
     
     private func isUserOwner() -> Bool {
+        print(authService.userId)
         return authService.userId == detailEvent.userId?.id || detailEvent.userId == nil;
     }
     

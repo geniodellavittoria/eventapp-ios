@@ -192,7 +192,7 @@
                         <viewLayoutGuide key="safeArea" id="0gz-KV-Asm"/>
                     </view>
                     <navigationItem key="navigationItem" id="mEE-MI-bNN">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="2N9-a1-pPi"/>
+                        <barButtonItem key="rightBarButtonItem" id="2N9-a1-pPi"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8i-iO-mvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -254,6 +254,7 @@
                 <navigationController id="5CN-mB-Oto" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Knv-fI-aaL"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="G4Y-49-hAf">
+                        <rect key="frame" x="0.0" y="-20" width="0.0" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
