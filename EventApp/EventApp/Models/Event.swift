@@ -21,6 +21,7 @@ struct Event: Codable {
     var eventEnd: Date?
     var eventImage: String?
     var category: Category?
+    var userId: User?
     //var impression: [UIImage]?
     
     init(name: String) {

@@ -20,14 +20,15 @@ class EventDetailViewController: FormViewController {
     
     var detailEvent = Event(name: "")
     
-    var viewMode = true
+    var viewMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (viewMode) {
+        if (isUserOwner()) {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
-        } else {
+        }
+        if (viewMode) {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
             
         }
@@ -94,6 +95,10 @@ class EventDetailViewController: FormViewController {
         
     }
     
+    private func isUserOwner() -> Bool {
+        return authService.userId == detailEvent.userId?.id || detailEvent.userId == nil;
+    }
+    
     @objc func registerForEvent(_ sender: UIBarButtonItem) {
         
         if let navController = self.navigationController {
@@ -101,7 +106,7 @@ class EventDetailViewController: FormViewController {
         }
     }
     
-    @objc func SaveEvent(_ sender: UIBarButtonItem) {
+    @objc func saveEvent(_ sender: UIBarButtonItem) {
         
         if let navController = self.navigationController {
             navController.popViewController(animated: true)
