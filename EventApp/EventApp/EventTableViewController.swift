@@ -113,7 +113,7 @@ class EventTableViewController : UITableViewController,
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
-            if let indexPath = tableView.indexPathForSelectedRow {
+            if let indexPath = self.tableView.indexPathForSelectedRow {
                 print("indexPath " + String(indexPath.item))
                 //let object = objects[indexPath.row] as! NSDate
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
@@ -129,7 +129,6 @@ class EventTableViewController : UITableViewController,
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier:"showDetail" , sender: cell)
     }
     
