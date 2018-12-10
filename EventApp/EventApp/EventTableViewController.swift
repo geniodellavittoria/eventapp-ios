@@ -128,7 +128,9 @@ class EventTableViewController : UITableViewController,
     // MARK: - Table View
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Select Event at: " + String(indexPath.item))
+        let cell = tableView.cellForRow(at: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier:"showDetail" , sender: cell)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

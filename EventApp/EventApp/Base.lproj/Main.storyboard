@@ -228,7 +228,7 @@
                     <navigationItem key="navigationItem" title="Events" id="17T-88-kNp">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="QXE-bV-cYn">
                             <connections>
-                                <segue destination="wZj-BO-5ri" kind="showDetail" id="2Qo-N6-I3t"/>
+                                <segue destination="wZj-BO-5ri" kind="showDetail" id="cj9-Da-Zgn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -298,6 +298,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="PmG-6k-aKl"/>
-        <segue reference="2Qo-N6-I3t"/>
+        <segue reference="cj9-Da-Zgn"/>
     </inferredMetricsTieBreakers>
 </document>
