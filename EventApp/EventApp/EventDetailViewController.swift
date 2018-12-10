@@ -20,8 +20,18 @@ class EventDetailViewController: FormViewController {
     
     var detailEvent = Event(name: "")
     
+    var viewMode = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (viewMode) {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
+        } else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
+            
+        }
+        print(detailEvent)
         
         // Do any additional setup after loading the view.
         
@@ -83,7 +93,15 @@ class EventDetailViewController: FormViewController {
         }
         
     }
-    @IBAction func SaveEvent(_ sender: UIBarButtonItem) {
+    
+    @objc func registerForEvent(_ sender: UIBarButtonItem) {
+        
+        if let navController = self.navigationController {
+            navController.popViewController(animated: true)
+        }
+    }
+    
+    @objc func SaveEvent(_ sender: UIBarButtonItem) {
         
         if let navController = self.navigationController {
             navController.popViewController(animated: true)

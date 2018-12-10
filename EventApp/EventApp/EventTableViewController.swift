@@ -22,7 +22,6 @@ class EventTableViewController : UITableViewController,
     private let eventController = EventController()
     
     private let searchController = UISearchController(searchResultsController: nil)
-    //var resultsTableController: ResultsTableController?
     
     let formatter = DateFormatter()
     let locationManager = LocationManager()
@@ -38,7 +37,8 @@ class EventTableViewController : UITableViewController,
         tableView.delegate = self
         
         eventController.getEvents(onSuccess: { events in
-            self.eventList = self.getEventsNear(events: events)
+            self.eventList = events
+            //self.eventList = self.getEventsNear(events: events)
             self.filteredEventList = events
             self.tableView.reloadData()
         }, onError: { error in
@@ -118,6 +118,7 @@ class EventTableViewController : UITableViewController,
                 //let object = objects[indexPath.row] as! NSDate
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
                 controller.detailEvent = filteredEventList[indexPath.item]
+                controller.viewMode = true
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -241,12 +242,13 @@ class EventTableViewController : UITableViewController,
     
     func getEventsNear(events: [Event]) -> [Event]{
         var nearEvents: [Event] = []
-        for event in events {
+        /*for event in events {
             let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
             if(locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location) < 5000){
                 nearEvents.append(event)
             }
         }
+        return nearEvents*/
         return nearEvents
     }
  

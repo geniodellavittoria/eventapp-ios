@@ -192,11 +192,7 @@
                         <viewLayoutGuide key="safeArea" id="0gz-KV-Asm"/>
                     </view>
                     <navigationItem key="navigationItem" id="mEE-MI-bNN">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UAB-RH-202">
-                            <connections>
-                                <action selector="SaveEvent:" destination="wZj-BO-5ri" id="KOy-73-7OO"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="2N9-a1-pPi"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8i-iO-mvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
