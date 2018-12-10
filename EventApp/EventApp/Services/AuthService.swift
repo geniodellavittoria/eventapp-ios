@@ -8,6 +8,7 @@
 
 import Foundation
 
+let authService = AuthService()
 class AuthService {
-    
+    public var userId: CLong?
 }

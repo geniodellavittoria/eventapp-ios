@@ -24,7 +24,9 @@ class UserController : RestController {
                 accessTokenAdapter.setAccessToken(accessToken: response.id_token)
                 do {
                     let claims: ClaimSet = try JWT.decode(response.id_token, algorithm: .hs512(Data(base64Encoded: Config.jwtSecret)!))
+                    authService.userId = claims["user_id"] as? CLong
                     print(claims)
+                    print(authService.userId as Any)
                     completion(true)
                 } catch {
                     print("Failed to decode JWT: \(error)")
