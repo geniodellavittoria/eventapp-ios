@@ -282,7 +282,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             let location1 = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
             let distance0 = getDistanceToCurrentLocation(location: location0)
             let distance1 = getDistanceToCurrentLocation(location: location1)
-            return distance0.isLessThanOrEqualTo(distance1) == true
+            return distance0.isLessThanOrEqualTo(distance1) == false
         })
     }
     
