@@ -38,7 +38,6 @@ class EventTableViewController : UITableViewController,
         
         eventController.getEvents(onSuccess: { events in
             self.eventList = events
-            //self.eventList = self.getEventsNear(events: events)
             self.filteredEventList = events
             self.tableView.reloadData()
         }, onError: { error in
@@ -187,9 +186,17 @@ class EventTableViewController : UITableViewController,
         tableView.reloadData()
     }
     
-    /*func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        <#code#>
-    }*/
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        print("New scope index is now \(selectedScope)")
+        if (selectedScope == 0) {
+            getAllEvents()
+        } else if (selectedScope == 1) {
+            getNearestEvents()
+        } else if (selectedScope == 2) {
+            getClosestEvents()
+        }
+        tableView.reloadData()
+    }
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         filteredEventList = eventList.filter({ (event: Event) -> Bool in
@@ -241,7 +248,15 @@ class EventTableViewController : UITableViewController,
         return UIImage()
     }
     
-    func getEventsNear(events: [Event]) -> [Event]{
+    func getAllEvents() {
+        
+    }
+    
+    func getClosestEvents() {
+    
+    }
+    
+    func getNearestEvents() {
         var nearEvents: [Event] = []
         /*for event in events {
             let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
@@ -249,8 +264,9 @@ class EventTableViewController : UITableViewController,
                 nearEvents.append(event)
             }
         }
-        return nearEvents*/
+ 
         return nearEvents
+        */
     }
  
 }
