@@ -18,6 +18,7 @@ class EventDetailViewController: FormViewController {
     var category = ""
     var categoryOptions: [Category] = []
     
+    private let eventController = EventController()
     let categoryController: CategoryController = CategoryController()
     
     var detailEvent = Event(name: "")
@@ -102,10 +103,22 @@ class EventDetailViewController: FormViewController {
     }
     
     @objc func registerForEvent(_ sender: UIBarButtonItem) {
+        var eventRegistration: EventRegistration = EventRegistration()
+        eventRegistration.registrationCategory = 2 // to register
+        eventRegistration.userId = authService.userId
+        eventRegistration.timestamp = Date.init()
         
-        if let navController = self.navigationController {
-            navController.popViewController(animated: true)
-        }
+        self.eventController.registerEvent(eventId: self.detailEvent.id!, eventRegistration: eventRegistration, completion: { (success) in
+            if (!success){
+                print("could not register for the event")
+            }
+            else{
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
+                
+            }
+        })
     }
     
     @objc func saveEvent(_ sender: UIBarButtonItem) {
