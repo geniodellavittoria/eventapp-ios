@@ -20,4 +20,23 @@ class EventController : RestController {
             print(error)
         })
     }
+    
+    func createEvent(event: Event, completion: @escaping (Bool) -> Void) {
+        post(resource: "", event, onSuccess: {
+            print("Create Event successfully")
+            completion(true)
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
+    }
+    
+    func registerEvent(eventId: CLong, eventRegistration: EventRegistration, completion: @escaping (Bool) -> Void) {
+        post(resource: "/" + String(eventId) + "/register", eventRegistration, onSuccess: {
+            completion(true)
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
+    }
 }

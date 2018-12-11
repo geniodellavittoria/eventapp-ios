@@ -11,8 +11,8 @@
 		501658AE21A9C1530041242C /* DataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658AD21A9C1530041242C /* DataRequest.swift */; };
 		501658B121A9D1750041242C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658B021A9D1750041242C /* AuthService.swift */; };
 		501658B421A9D89A0041242C /* AccessTokenAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658B321A9D89A0041242C /* AccessTokenAdapter.swift */; };
-		501658B621A9E8400041242C /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658B521A9E8400041242C /* RegisterController.swift */; };
 		501658BB21AA37DC0041242C /* FormValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658BA21AA37DC0041242C /* FormValidation.swift */; };
+		501E970C21C028D800689B0C /* EventRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501E970B21C028D800689B0C /* EventRegistration.swift */; };
 		505FBD4E219F906E007A0914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD4D219F906E007A0914 /* AppDelegate.swift */; };
 		505FBD50219F906E007A0914 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD4F219F906E007A0914 /* ViewController.swift */; };
 		505FBD53219F906E007A0914 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 505FBD51219F906E007A0914 /* Main.storyboard */; };
@@ -73,8 +73,8 @@
 		501658AD21A9C1530041242C /* DataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequest.swift; sourceTree = "<group>"; };
 		501658B021A9D1750041242C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		501658B321A9D89A0041242C /* AccessTokenAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokenAdapter.swift; sourceTree = "<group>"; };
-		501658B521A9E8400041242C /* RegisterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		501658BA21AA37DC0041242C /* FormValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidation.swift; sourceTree = "<group>"; };
+		501E970B21C028D800689B0C /* EventRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRegistration.swift; sourceTree = "<group>"; };
 		504CD6CE21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		504CD6CF21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		505FBD4A219F906E007A0914 /* EventApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -279,6 +279,7 @@
 				501658AB21A9BFC70041242C /* JwtToken.swift */,
 				50F1116C21AC6F1F00022DDD /* Category.swift */,
 				5061BE2621ADF59F0068D39E /* EventDetailCategory.swift */,
+				501E970B21C028D800689B0C /* EventRegistration.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -290,7 +291,6 @@
 				509EF27D21A993AA00E57614 /* UserController.swift */,
 				509EF28321A99B2900E57614 /* EventController.swift */,
 				501658AD21A9C1530041242C /* DataRequest.swift */,
-				501658B521A9E8400041242C /* RegisterController.swift */,
 				50F1116A21AC6F0000022DDD /* CategoryController.swift */,
 			);
 			path = Controllers;
@@ -553,12 +553,12 @@
 				505FBD81219F9115007A0914 /* RegistrationViewController.swift in Sources */,
 				509EF27C21A991D800E57614 /* RestController.swift in Sources */,
 				501658B421A9D89A0041242C /* AccessTokenAdapter.swift in Sources */,
-				501658B621A9E8400041242C /* RegisterController.swift in Sources */,
 				50E2B18521B15F420071DE51 /* JSONEncoding.swift in Sources */,
 				509EF27921A98BC000E57614 /* User.swift in Sources */,
 				8267C63621AAEE230059BF78 /* EventDetailViewController.swift in Sources */,
 				509EF27621A981B100E57614 /*  Config.swift in Sources */,
 				5061BE2921AF18120068D39E /* DictionaryEncoder.swift in Sources */,
+				501E970C21C028D800689B0C /* EventRegistration.swift in Sources */,
 				505FBD85219F915C007A0914 /* EventTableViewController.swift in Sources */,
 				8267C63821AB37BC0059BF78 /* LocationRow.swift in Sources */,
 				501658BB21AA37DC0041242C /* FormValidation.swift in Sources */,
