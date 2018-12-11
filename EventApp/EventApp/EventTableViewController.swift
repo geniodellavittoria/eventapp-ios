@@ -187,7 +187,6 @@ class EventTableViewController : UITableViewController,
     }
     
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        print("New scope index is now \(selectedScope)")
         if (selectedScope == 0) {
             getAllEvents()
         } else if (selectedScope == 1) {
@@ -249,11 +248,20 @@ class EventTableViewController : UITableViewController,
     }
     
     func getAllEvents() {
-        
+        filteredEventList.sort(by: { $0.name < $1.name })
     }
     
     func getClosestEvents() {
-    
+        filteredEventList.sort(by: {
+            if ($0.eventStart == nil) {
+                return false
+            }
+            if ($1.eventStart == nil) {
+                return true
+            }
+            return $0.eventStart!.compare($1.eventStart!) == .orderedAscending
+            
+        })
     }
     
     func getNearestEvents() {
