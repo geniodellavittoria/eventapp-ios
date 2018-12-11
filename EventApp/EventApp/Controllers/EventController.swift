@@ -32,7 +32,7 @@ class EventController : RestController {
     }
     
     func registerEvent(eventId: CLong, eventRegistration: EventRegistration, completion: @escaping (Bool) -> Void) {
-        post(resource: "/" + String(eventId) + "/register", eventRegistration, onSuccess: {
+        post(resource: resource + "/" + String(eventId) + "/register", eventRegistration, onSuccess: {
             completion(true)
         }, onError: { error in
             print(error)

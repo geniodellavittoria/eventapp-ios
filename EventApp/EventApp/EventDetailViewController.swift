@@ -113,7 +113,7 @@ class EventDetailViewController: FormViewController {
     
     @objc func registerForEvent() {
         var eventRegistration: EventRegistration = EventRegistration()
-        eventRegistration.registrationCategory = 2 // to register
+        eventRegistration.eventRegistrationId = 2 // to register
         eventRegistration.userId = authService.userId
         eventRegistration.timestamp = Date.init()
         

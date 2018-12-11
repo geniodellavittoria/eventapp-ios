@@ -166,12 +166,12 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-            let favoriteTitle = NSLocalizedString("Favorite", comment: "Favorite action")
-            let favoriteAction = UITableViewRowAction(style: .normal, title: favoriteTitle) { (action, indexPath) in
-                self.tagEvent(indexPath: indexPath)
-            }
-            favoriteAction.backgroundColor = .blue
-            return [favoriteAction]
+        let favoriteTitle = NSLocalizedString("Favorite", comment: "Favorite action")
+        let favoriteAction = UITableViewRowAction(style: .normal, title: favoriteTitle) { (action, indexPath) in
+            self.tagEvent(indexPath: indexPath)
+        }
+        favoriteAction.backgroundColor = .blue
+        return [favoriteAction]
     }
     
     
@@ -292,7 +292,22 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     func tagEvent(indexPath: IndexPath) {
-        
+        var event = filteredEventList[indexPath.row]
+        if (event.id != nil) {
+            var eventRegistration = EventRegistration()
+            eventRegistration.eventRegistrationId = 2
+            eventRegistration.timestamp = Date()
+            eventRegistration.userId = authService.userId
+            eventController.registerEvent(eventId: event.id!, eventRegistration: eventRegistration, completion: { (success) in
+                if (!success) {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Error", message: "Could not tag event.", preferredStyle: UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            })
+        }
     }
     
 }
