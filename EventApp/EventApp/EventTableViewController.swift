@@ -40,6 +40,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         eventController.getEvents(onSuccess: { events in
             self.eventList = events
             self.filteredEventList = events
+            self.getAllEvents()
             self.tableView.reloadData()
         }, onError: { error in
             print("could not load any events")
