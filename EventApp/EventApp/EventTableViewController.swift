@@ -271,16 +271,23 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     func getNearestEvents() {
-        var nearEvents: [Event] = []
-        /*for event in events {
-         let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
-         if(locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location) < 5000){
-         nearEvents.append(event)
-         }
-         }
-         
-         return nearEvents
-         */
+        filteredEventList.sort(by: {
+            if ($0.latitude == nil && $0.longitude == nil) {
+                return false
+            }
+            if($1.latitude == nil && $1.longitude == nil){
+                return true
+            }
+            let location0 = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
+            let location1 = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
+            let distance0 = getDistanceToCurrentLocation(location: location0)
+            let distance1 = getDistanceToCurrentLocation(location: location1)
+            return distance0.isLessThanOrEqualTo(distance1) == true
+        })
+    }
+    
+    func getDistanceToCurrentLocation (location: CLLocation ) -> (Double){
+        return locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location)
     }
     
     func tagEvent(indexPath: IndexPath) {
