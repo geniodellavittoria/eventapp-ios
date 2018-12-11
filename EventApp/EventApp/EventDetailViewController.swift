@@ -47,15 +47,22 @@ class EventDetailViewController: FormViewController {
             
             <<< TextRow("Title").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
+                row.value = self.detailEvent.name
                 }.onChange { row in
                     self.navigationItem.title = row.value
             }
             
-            <<< TextRow("Location").cellSetup {
+            /*<<< TextRow("Location").cellSetup {
                 $1.cell.textField.placeholder = $0.row.tag
-            }
+            }*/
             
             <<< PushRow<String>() {
+                $0.cellSetup { cell, row in
+                    let category = self.detailEvent.category?.name
+                    if (category != nil) {
+                        row.value = category!
+                    }
+                }
                 $0.title = "Category"
                 $0.value = category
                 $0.options = categoryOptions.map({ $0.name })
@@ -63,7 +70,7 @@ class EventDetailViewController: FormViewController {
                     if let value = row.value {
                         self.category = value
                     }
-                }
+                    }
                     .cellUpdate { cell, row in
                         self.categoryController.getCategories(onSuccess: { categories in
                             self.categoryOptions = categories //.map({ EventDetailCategory(id: $0.id, value: $0.name) })
@@ -72,27 +79,29 @@ class EventDetailViewController: FormViewController {
                             print(error)
                         })
                 }
-            }
-            
-            form +++ Section("Description")
+        }
+        
+        form +++ Section("Description")
             <<< TextAreaRow() {
                 $0.tag = "description"
                 $0.placeholder = "Description"
-            }
-            
-            form +++ Section("Details")
+                $0.value = self.detailEvent.description
+        }
+        
+        form +++ Section("Details")
             <<< DateTimeRow("Starts") {
                 $0.title = $0.tag
-                $0.value = Date().addingTimeInterval(60*60*24)
-                }
+                $0.value = (self.detailEvent.eventStart ?? Date()).addingTimeInterval(60*60*24)
+            }
             
             <<< DateTimeInlineRow("Ends"){
                 $0.title = $0.tag
-                $0.value = Date().addingTimeInterval(60*60*25)
-                }
-            <<< LocationRow(){
-                $0.title = "LocationRow"
-                $0.value = CLLocation(latitude: -34.91, longitude: -56.1646)
+                $0.value = (self.detailEvent.eventEnd ?? Date()).addingTimeInterval(60*60*25)
+            }
+            <<< LocationRow("Location").cellSetup { cell, row in
+                row.title = "Location"
+                row.value = CLLocation(latitude: self.detailEvent.latitude ?? 0, longitude: self.detailEvent.longitude ?? 0)
+        
         }
         
     }
