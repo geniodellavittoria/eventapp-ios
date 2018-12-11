@@ -62,8 +62,6 @@ class RestController {
         getAll(resource: self.resource, response: response, onSuccess: onSuccess, onError: onError)
     }
     
-    
-    
     func get<Res: Decodable>(resource: String, response: Res.Type, onSuccess: @escaping (Res) -> Void, onError: @escaping (Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
             onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))

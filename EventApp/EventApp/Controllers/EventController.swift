@@ -39,4 +39,5 @@ class EventController : RestController {
             completion(false)
         })
     }
+    
 }

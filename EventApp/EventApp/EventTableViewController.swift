@@ -18,8 +18,10 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     var detailViewController: EventDetailViewController? = nil
     private var filteredEventList = [Event]()
     private var eventList = [Event]()
+    private var eventRegistrations: [EventRegistration] = [EventRegistration]()
     
     private let eventController = EventController()
+    private let eventRegistrationController = EventRegistrationController()
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -44,6 +46,12 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             self.tableView.reloadData()
         }, onError: { error in
             print("could not load any events")
+        })
+        
+        eventRegistrationController.getTaggingEventRegistrations(onSuccess: { eventRegistrations in
+            self.eventRegistrations = eventRegistrations
+        }, onError: { error in
+            print(error)
         })
         
         if #available(iOS 11.0, *) {
