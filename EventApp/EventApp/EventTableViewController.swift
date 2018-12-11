@@ -35,6 +35,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: "EventCell")
         
         tableView.delegate = self
+        self.tableView.rowHeight = 115.0;
         
         eventController.getEvents(onSuccess: { events in
             self.eventList = events
@@ -154,11 +155,6 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             }
         }
         return cell
-    }
-    
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

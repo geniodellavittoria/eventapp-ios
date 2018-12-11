@@ -102,13 +102,13 @@ class EventDetailViewController: FormViewController {
         return authService.userId == detailEvent.userId?.id || detailEvent.userId == nil;
     }
     
-    @objc func registerForEvent(_ sender: UIBarButtonItem) {
+    @objc func registerForEvent() {
         var eventRegistration: EventRegistration = EventRegistration()
         eventRegistration.registrationCategory = 2 // to register
         eventRegistration.userId = authService.userId
         eventRegistration.timestamp = Date.init()
         
-        self.eventController.registerEvent(eventId: self.detailEvent.id!, eventRegistration: eventRegistration, completion: { (success) in
+        eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, completion: { (success) in
             if (!success){
                 print("could not register for the event")
             }
