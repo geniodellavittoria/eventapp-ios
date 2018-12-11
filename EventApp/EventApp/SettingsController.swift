@@ -18,7 +18,7 @@ class SettingsController: FormViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         form +++ Section("Section1")
-            <<< SwitchRow() {
+            <<< SwitchRow("locationSwitchTag") {
                 $0.title = "GPS enabled"
                 $0.value = gpsEnabled
                 }.onChange({ (row) in
@@ -30,6 +30,9 @@ class SettingsController: FormViewController{
                     }
                 })
             <<< LocationRow(){
+                $0.hidden = Condition.function(["locationSwitchTag"], { form in
+                    return !((form.rowBy(tag: "locationSwitchTag") as? SwitchRow)?.value ?? true)
+                    })
                 $0.tag = "location"
                 $0.title = "Location"
                 $0.value = CLLocation(latitude: -34.91, longitude: -56.1646)
