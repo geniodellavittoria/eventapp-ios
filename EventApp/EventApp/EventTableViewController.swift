@@ -164,6 +164,15 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         return eventList.count
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+            let favoriteTitle = NSLocalizedString("Favorite", comment: "Favorite action")
+            let favoriteAction = UITableViewRowAction(style: .normal, title: favoriteTitle) { (action, indexPath) in
+                self.tagEvent(indexPath: indexPath)
+            }
+            favoriteAction.backgroundColor = .blue
+            return [favoriteAction]
+    }
+    
     
     // MARK: - Search bar
     
@@ -272,6 +281,10 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
          
          return nearEvents
          */
+    }
+    
+    func tagEvent(indexPath: IndexPath) {
+        
     }
     
 }
