@@ -12,7 +12,7 @@ import CoreLocation
 
 //UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating
 class EventTableViewController : UITableViewController,
- UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
+UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
@@ -137,20 +137,21 @@ class EventTableViewController : UITableViewController,
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
-        
-        let event = filteredEventList[indexPath.row]
-        cell.eventImage?.image = getBase64DecodedImage(event.eventImage)
-        cell.eventTitleLbl?.text = event.name
-        cell.eventCategoryLbl?.text  = event.category?.name
-        cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)
-        cell.eventTimeToLbl.text = self.formatter.string(from: event.eventEnd!)
-        
-        let formatter = NumberFormatter()
-        formatter.locale = Locale.current
-        formatter.numberStyle = .currency
-        if let formattedPrice = formatter.string(from: event.price! as NSNumber)
-        {
-            cell.eventPriceLbl?.text = formattedPrice
+        if (!filteredEventList.isEmpty) {
+            let event = filteredEventList[indexPath.row]
+            cell.eventImage?.image = getBase64DecodedImage(event.eventImage)
+            cell.eventTitleLbl?.text = event.name
+            cell.eventCategoryLbl?.text  = event.category?.name
+            cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)
+            cell.eventTimeToLbl.text = self.formatter.string(from: event.eventEnd!)
+            
+            let formatter = NumberFormatter()
+            formatter.locale = Locale.current
+            formatter.numberStyle = .currency
+            if let formattedPrice = formatter.string(from: event.price! as NSNumber)
+            {
+                cell.eventPriceLbl?.text = formattedPrice
+            }
         }
         return cell
     }
@@ -267,16 +268,16 @@ class EventTableViewController : UITableViewController,
     func getNearestEvents() {
         var nearEvents: [Event] = []
         /*for event in events {
-            let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
-            if(locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location) < 5000){
-                nearEvents.append(event)
-            }
-        }
- 
-        return nearEvents
-        */
+         let location = CLLocation(latitude: event.latitude!, longitude: event.longitude!)
+         if(locationManager.getDistanceInMeters(coordinate1: locationManager.currentLocation, coordinate2: location) < 5000){
+         nearEvents.append(event)
+         }
+         }
+         
+         return nearEvents
+         */
     }
- 
+    
 }
 
 
