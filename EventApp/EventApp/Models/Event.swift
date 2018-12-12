@@ -13,8 +13,8 @@ struct Event: Codable {
     var id: CLong?
     var name: String
     var description: String?
-    var longitude: Double?
-    var latitude: Double?
+    var locationLongitude: Double?
+    var locationLatitude: Double?
     var price: Double?
     var timestamp: Date?
     var eventStart: Date?

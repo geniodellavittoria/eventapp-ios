@@ -305,14 +305,14 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     
     func getNearestEvents() {
         filteredEventList.sort(by: {
-            if ($0.latitude == nil && $0.longitude == nil) {
+            if ($0.locationLatitude == nil && $0.locationLongitude == nil) {
                 return false
             }
-            if($1.latitude == nil && $1.longitude == nil){
+            if($1.locationLatitude == nil && $1.locationLongitude == nil){
                 return true
             }
-            let location0 = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
-            let location1 = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
+            let location0 = CLLocation(latitude: $0.locationLatitude!, longitude: $0.locationLongitude!)
+            let location1 = CLLocation(latitude: $1.locationLatitude!, longitude: $1.locationLongitude!)
             let distance0 = getDistanceToCurrentLocation(location: location0)
             let distance1 = getDistanceToCurrentLocation(location: location1)
             return distance0.isLessThanOrEqualTo(distance1) == false

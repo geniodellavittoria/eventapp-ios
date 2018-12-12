@@ -22,7 +22,7 @@ class EventController : RestController {
     }
     
     func createEvent(event: Event, completion: @escaping (Bool) -> Void) {
-        post(resource: "", event, onSuccess: {
+        post(resource: "events", event, onSuccess: {
             print("Create Event successfully")
             completion(true)
         }, onError: { error in

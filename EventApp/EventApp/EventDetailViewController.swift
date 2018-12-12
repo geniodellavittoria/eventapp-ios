@@ -12,8 +12,7 @@ import ImageRow
 import CoreLocation
 
 class EventDetailViewController: FormViewController {
-    let saveBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
-    let registerBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
+
     
     var category = ""
     var categoryOptions: [Category] = []
@@ -27,6 +26,9 @@ class EventDetailViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let saveBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveEvent))
+        let registerBarButtonItem = UIBarButtonItem(title: "Register", style: .plain, target: self, action: #selector(registerForEvent))
+        
         if (isUserOwner()) {
             self.navigationItem.rightBarButtonItem = saveBarButtonItem
         } else if (viewMode) {
@@ -99,18 +101,17 @@ class EventDetailViewController: FormViewController {
             }
             <<< LocationRow("location").cellSetup { cell, row in
                 row.title = "Location"
-                row.value = CLLocation(latitude: self.detailEvent.latitude ?? 0, longitude: self.detailEvent.longitude ?? 0)
+                row.value = CLLocation(latitude: self.detailEvent.locationLatitude ?? 0, longitude: self.detailEvent.locationLongitude ?? 0)
         
         }
         
     }
     
     private func isUserOwner() -> Bool {
-        print(authService.userId)
         return authService.userId == detailEvent.userId?.id || detailEvent.userId == nil;
     }
     
-    @objc func registerForEvent() {
+    @objc func registerForEvent(_ sender: Any) {
         var eventRegistration: EventRegistration = EventRegistration()
         eventRegistration.eventRegistrationId = 1 // to register
         eventRegistration.userId = authService.userId
@@ -129,37 +130,26 @@ class EventDetailViewController: FormViewController {
         })
     }
     
-    @objc func saveEvent(_ sender: UIBarButtonItem) {
+    @objc func saveEvent(_ sender: Any) {
         var eventForm = self.form.values()
         var event = Event(name: eventForm["name"] as! String)
         event.eventStart = eventForm["eventStart"] as! Date
         event.eventEnd = eventForm["eventEnd"] as! Date
         event.description = eventForm["description"] as! String
         let location = eventForm["location"] as! CLLocation
-        event.latitude = location.coordinate.latitude
-        event.longitude = location.coordinate.longitude
+        event.locationLatitude = location.coordinate.latitude
+        event.locationLongitude = location.coordinate.longitude
+        event.timestamp = Date()
         print(eventForm["eventImage"])
         print(eventForm["eventImage"] != nil)
         if let eventImage = eventForm["eventImage"] {
             event.eventImage = (eventForm["eventImage"] as! UIImage).toBase64()
         }
         
-        
-        /*
-        print(event["categoryId"])
-        print(categoryOptions.first(where: { $0.name == event["categoryId"] as? String ?? "" }))
-        event["categoryId"] = categoryOptions.first(where: { $0.name == event["categoryId"] as? String ?? "" })
-        DictionaryEncoder.getModelFromDict(dict: event, res: Event.self, onSuccess: { (event) in
-            print("daaaamn daniel!")
-        },onError: {(event) in
-                print("you idiot")
-            
-        })
-        
-         self.eventController.createEvent(event: event, completion: { (success) in
+        eventController.createEvent(event: event, completion: { (success) in
                 if let navController = self.navigationController {
                     navController.popViewController(animated: true)
-                }})*/
+                }})
         print(event)
     }
 }
