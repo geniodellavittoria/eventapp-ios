@@ -170,6 +170,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var actions = [UITableViewRowAction]()
         let tagged = eventRegistrations.contains(where: { eventRegistration in
             let event = filteredEventList[indexPath.row]
             if (event.id == eventRegistration.eventId) {
@@ -177,21 +178,31 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             }
             return false;
         })
+        
+        let event = filteredEventList[indexPath.row]
+        if authService.userId == event.userId?.id {
+            let deleteTitle = NSLocalizedString("Delete", comment: "Delete")
+            let deleteAction = UITableViewRowAction(style: .destructive, title: deleteTitle, handler: { (action, indexPath) in
+                self.deleteEvent(indexPath: indexPath)
+            })
+            actions.append(deleteAction)
+        }
         if (tagged) {
             let taggingTitle = NSLocalizedString("Unfavorite", comment: "Unfavorite action")
             let taggingAction = UITableViewRowAction(style: .normal, title: taggingTitle) { (action, indexPath) in
                 self.untagEvent(indexPath: indexPath)
             }
-            taggingAction.backgroundColor = .red
-            return [taggingAction]
+            taggingAction.backgroundColor = .blue
+            actions.append(taggingAction)
         } else {
             let taggingTitle = NSLocalizedString("Favorite", comment: "Favorite action")
             let taggingAction = UITableViewRowAction(style: .normal, title: taggingTitle) { (action, indexPath) in
                 self.tagEvent(indexPath: indexPath)
             }
-            taggingAction.backgroundColor = .blue
-            return [taggingAction]
+            taggingAction.backgroundColor = .green
+            actions.append(taggingAction)
         }
+        return actions
         
     }
     
@@ -335,7 +346,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     func untagEvent(indexPath: IndexPath) {
-        var event = filteredEventList[indexPath.row]
+        let event = filteredEventList[indexPath.row]
         if event.id != nil {
             eventController.unregisterEvent(eventId: event.id!, completion: { (success) in
                 if !success {
@@ -356,6 +367,17 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         }, onError: { error in
             print(error)
         })
+    }
+    
+    func deleteEvent(indexPath: IndexPath) {
+        let event = filteredEventList[indexPath.row]
+        if event.id != nil {
+            eventController.deleteEvent(eventId: event.id!, completion: { success in
+                if !success {
+                    print("Could not delete event" + String(event.id!))
+                }
+            })
+        }
     }
     
 }
