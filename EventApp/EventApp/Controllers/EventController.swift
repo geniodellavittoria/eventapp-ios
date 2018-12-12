@@ -40,4 +40,12 @@ class EventController : RestController {
         })
     }
     
+    func unregisterEvent(eventId: CLong, completion: @escaping (Bool) -> Void) {
+        delete(resource: resource + "/" + String(eventId) + "/unregister", onSuccess: {
+            completion(true)
+        }, onError: { error in
+            completion(false)
+        })
+    }
+    
 }

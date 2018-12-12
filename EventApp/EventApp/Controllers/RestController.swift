@@ -148,6 +148,17 @@ class RestController {
         put(resource: resource, body: body)
     }*/
     
+    func delete(resource: String, onSuccess: @escaping () -> Void, onError: @escaping(Error) -> Void) {
+        guard let url = URL(string: endpointUrl + resource) else {
+            onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))
+            return
+        }
+        Alamofire.request(url, method: .delete)
+            .response(completionHandler: { response in
+                onSuccess()
+            })
+    }
+    
     func delete<Res: Decodable>(resource: String, onSuccess: @escaping (Res) -> Void, onError: @escaping(Error) -> Void) {
         guard let url = URL(string: endpointUrl + resource) else {
             onError(RESTError.InvalidUrlError("Invalid Url: " + endpointUrl + resource))

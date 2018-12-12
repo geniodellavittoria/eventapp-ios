@@ -20,11 +20,12 @@ class EventRegistrationController : RestController {
     }
     
     func getTaggingEventRegistrations(onSuccess: @escaping ([EventRegistration]) -> Void, onError: @escaping (Error) -> Void) {
-        getAll(resource: "tagging", response: EventRegistration.self, onSuccess: { eventRegistrations in
+        getAll(resource: "registrations/tagging", response: EventRegistration.self, onSuccess: { eventRegistrations in
             onSuccess(eventRegistrations)
         }, onError: { error in
             print(error)
             onError(error)
         })
     }
+    
 }

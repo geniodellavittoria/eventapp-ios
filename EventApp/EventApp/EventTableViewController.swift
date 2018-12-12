@@ -48,11 +48,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             print("could not load any events")
         })
         
-        eventRegistrationController.getTaggingEventRegistrations(onSuccess: { eventRegistrations in
-            self.eventRegistrations = eventRegistrations
-        }, onError: { error in
-            print(error)
-        })
+        getEventRegistrations()
         
         if #available(iOS 11.0, *) {
             // For iOS 11 and later, place the search bar in the navigation bar.
@@ -174,12 +170,29 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let favoriteTitle = NSLocalizedString("Favorite", comment: "Favorite action")
-        let favoriteAction = UITableViewRowAction(style: .normal, title: favoriteTitle) { (action, indexPath) in
-            self.tagEvent(indexPath: indexPath)
+        let tagged = eventRegistrations.contains(where: { eventRegistration in
+            let event = filteredEventList[indexPath.row]
+            if (event.id == eventRegistration.eventId) {
+                return true;
+            }
+            return false;
+        })
+        if (tagged) {
+            let taggingTitle = NSLocalizedString("Unfavorite", comment: "Unfavorite action")
+            let taggingAction = UITableViewRowAction(style: .normal, title: taggingTitle) { (action, indexPath) in
+                self.untagEvent(indexPath: indexPath)
+            }
+            taggingAction.backgroundColor = .red
+            return [taggingAction]
+        } else {
+            let taggingTitle = NSLocalizedString("Favorite", comment: "Favorite action")
+            let taggingAction = UITableViewRowAction(style: .normal, title: taggingTitle) { (action, indexPath) in
+                self.tagEvent(indexPath: indexPath)
+            }
+            taggingAction.backgroundColor = .blue
+            return [taggingAction]
         }
-        favoriteAction.backgroundColor = .blue
-        return [favoriteAction]
+        
     }
     
     
@@ -313,9 +326,36 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
+                } else {
+                    self.getEventRegistrations()
+                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                 }
             })
         }
+    }
+    
+    func untagEvent(indexPath: IndexPath) {
+        var event = filteredEventList[indexPath.row]
+        if event.id != nil {
+            eventController.unregisterEvent(eventId: event.id!, completion: { (success) in
+                if !success {
+                    print("Could not unregister for event")
+                } else {
+                    self.getEventRegistrations()
+                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                }
+            })
+            
+        }
+    }
+    
+    func getEventRegistrations() {
+        eventRegistrationController.getTaggingEventRegistrations(onSuccess: { eventRegistrations in
+            self.eventRegistrations = eventRegistrations
+            print(eventRegistrations)
+        }, onError: { error in
+            print(error)
+        })
     }
     
 }

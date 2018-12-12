@@ -12,4 +12,5 @@ struct EventRegistration : Codable {
     var timestamp: Date?
     var eventRegistrationId: CLong?
     var userId: CLong?
+    var eventId: CLong?
 }
