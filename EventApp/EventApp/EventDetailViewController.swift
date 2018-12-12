@@ -27,7 +27,6 @@ class EventDetailViewController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if (isUserOwner()) {
             self.navigationItem.rightBarButtonItem = saveBarButtonItem
         } else if (viewMode) {
@@ -113,7 +112,7 @@ class EventDetailViewController: FormViewController {
     
     @objc func registerForEvent() {
         var eventRegistration: EventRegistration = EventRegistration()
-        eventRegistration.eventRegistrationId = 2 // to register
+        eventRegistration.eventRegistrationId = 1 // to register
         eventRegistration.userId = authService.userId
         eventRegistration.timestamp = Date.init()
         
@@ -131,10 +130,18 @@ class EventDetailViewController: FormViewController {
     }
     
     @objc func saveEvent(_ sender: UIBarButtonItem) {
-        
-        if let navController = self.navigationController {
-            navController.popViewController(animated: true)
-        }
+        let event = self.form.values()
+        DictionaryEncoder.getModelFromDict(dict: self.form.values(), res: Event.self, onSuccess: { (event) in
+            print("daaaamn daniel!")
+        },onError: {(event) in
+                print("you idiot")
+            
+        })
+        /*self.eventController.createEvent(event: event, completion: { (success) in
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }})*/
+        print(event)
     }
 }
 
