@@ -97,7 +97,7 @@ class EventDetailViewController: FormViewController {
                 $0.title = "End"
                 $0.value = (self.detailEvent.eventEnd ?? Date()).addingTimeInterval(60*60*25)
             }
-            <<< LocationRow("Location").cellSetup { cell, row in
+            <<< LocationRow("location").cellSetup { cell, row in
                 row.title = "Location"
                 row.value = CLLocation(latitude: self.detailEvent.latitude ?? 0, longitude: self.detailEvent.longitude ?? 0)
         
@@ -135,6 +135,9 @@ class EventDetailViewController: FormViewController {
         event.eventStart = eventForm["eventStart"] as! Date
         event.eventEnd = eventForm["eventEnd"] as! Date
         event.description = eventForm["description"] as! String
+        let location = eventForm["location"] as! CLLocation
+        event.latitude = location.coordinate.latitude
+        event.longitude = location.coordinate.longitude
         print(eventForm["eventImage"])
         print(eventForm["eventImage"] != nil)
         if let eventImage = eventForm["eventImage"] {
