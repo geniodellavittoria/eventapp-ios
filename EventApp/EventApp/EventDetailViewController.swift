@@ -38,13 +38,13 @@ class EventDetailViewController: FormViewController {
         // Do any additional setup after loading the view.
         
         form +++ Section("Infos")
-            <<< ImageRow() {
+            <<< ImageRow("eventImage") {
                 $0.title = "Event Image"
                 $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
                 $0.clearAction = .yes(style: UIAlertAction.Style.destructive)
             }
             
-            <<< TextRow("Title").cellSetup { cell, row in
+            <<< TextRow("name").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
                 row.value = self.detailEvent.name
                 }.onChange { row in
@@ -55,7 +55,7 @@ class EventDetailViewController: FormViewController {
                 $1.cell.textField.placeholder = $0.row.tag
             }*/
             
-            <<< PushRow<String>() {
+            <<< PushRow<String>("categoryId") {
                 $0.cellSetup { cell, row in
                     let category = self.detailEvent.category?.name
                     if (category != nil) {
@@ -81,20 +81,20 @@ class EventDetailViewController: FormViewController {
         }
         
         form +++ Section("Description")
-            <<< TextAreaRow() {
+            <<< TextAreaRow("description") {
                 $0.tag = "description"
                 $0.placeholder = "Description"
                 $0.value = self.detailEvent.description
         }
         
         form +++ Section("Details")
-            <<< DateTimeRow("Starts") {
-                $0.title = $0.tag
+            <<< DateTimeRow("eventStart") {
+                $0.title = "Start"
                 $0.value = (self.detailEvent.eventStart ?? Date()).addingTimeInterval(60*60*24)
             }
             
-            <<< DateTimeInlineRow("Ends"){
-                $0.title = $0.tag
+            <<< DateTimeInlineRow("eventEnd"){
+                $0.title = "End"
                 $0.value = (self.detailEvent.eventEnd ?? Date()).addingTimeInterval(60*60*25)
             }
             <<< LocationRow("Location").cellSetup { cell, row in
@@ -130,14 +130,30 @@ class EventDetailViewController: FormViewController {
     }
     
     @objc func saveEvent(_ sender: UIBarButtonItem) {
-        let event = self.form.values()
-        DictionaryEncoder.getModelFromDict(dict: self.form.values(), res: Event.self, onSuccess: { (event) in
+        var eventForm = self.form.values()
+        var event = Event(name: eventForm["name"] as! String)
+        event.eventStart = eventForm["eventStart"] as! Date
+        event.eventEnd = eventForm["eventEnd"] as! Date
+        event.description = eventForm["description"] as! String
+        print(eventForm["eventImage"])
+        print(eventForm["eventImage"] != nil)
+        if let eventImage = eventForm["eventImage"] {
+            event.eventImage = (eventForm["eventImage"] as! UIImage).toBase64()
+        }
+        
+        
+        /*
+        print(event["categoryId"])
+        print(categoryOptions.first(where: { $0.name == event["categoryId"] as? String ?? "" }))
+        event["categoryId"] = categoryOptions.first(where: { $0.name == event["categoryId"] as? String ?? "" })
+        DictionaryEncoder.getModelFromDict(dict: event, res: Event.self, onSuccess: { (event) in
             print("daaaamn daniel!")
         },onError: {(event) in
                 print("you idiot")
             
         })
-        /*self.eventController.createEvent(event: event, completion: { (success) in
+        
+         self.eventController.createEvent(event: event, completion: { (success) in
                 if let navController = self.navigationController {
                     navController.popViewController(animated: true)
                 }})*/
