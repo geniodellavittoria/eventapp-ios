@@ -142,8 +142,8 @@ class EventDetailViewController: FormViewController {
         event.timestamp = Date()
         print(eventForm["eventImage"])
         print(eventForm["eventImage"] != nil)
-        if let eventImage = eventForm["eventImage"] {
-            event.eventImage = (eventForm["eventImage"] as! UIImage).toBase64()
+        if let eventImage = eventForm["eventImage"] as? UIImage {
+            event.eventImage = (eventImage).toBase64()
         }
         
         eventController.createEvent(event: event, completion: { (success) in

@@ -154,9 +154,8 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             let formatter = NumberFormatter()
             formatter.locale = Locale.current
             formatter.numberStyle = .currency
-            if let formattedPrice = formatter.string(from: event.price! as NSNumber)
-            {
-                cell.eventPriceLbl?.text = formattedPrice
+            if let formattedPrice = event.price as? NSNumber {
+                cell.eventPriceLbl?.text = formatter.string(from: formattedPrice)
             }
         }
         return cell
