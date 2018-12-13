@@ -145,7 +145,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         if (!filteredEventList.isEmpty) {
             let event = filteredEventList[indexPath.row]
-            cell.eventImage?.image = getBase64DecodedImage(event.eventImage)
+            cell.eventImage?.image = Base64ImageHelper.getBase64DecodedImage(event.eventImage)
             cell.eventTitleLbl?.text = event.name
             cell.eventCategoryLbl?.text  = event.category?.name
             cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)
@@ -273,17 +273,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     
     // MARK: - Custom functions
     
-    func getBase64DecodedImage(_ data: String?) -> UIImage {
-        if (data == nil) {
-            return UIImage()
-        }
-        let decodedData = Data(base64Encoded: data!, options: NSData.Base64DecodingOptions(rawValue: 0))
-        
-        if (decodedData != nil) {
-            return UIImage(data: decodedData!)!
-        }
-        return UIImage()
-    }
+    
     
     func getAllEvents() {
         filteredEventList.sort(by: { $0.name < $1.name })

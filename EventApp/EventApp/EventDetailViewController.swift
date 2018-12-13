@@ -42,8 +42,11 @@ class EventDetailViewController: FormViewController {
         form +++ Section("Infos")
             <<< ImageRow("eventImage") {
                 $0.title = "Event Image"
+                
                 $0.sourceTypes = [.PhotoLibrary, .SavedPhotosAlbum]
                 $0.clearAction = .yes(style: UIAlertAction.Style.destructive)
+                }.cellSetup { cell, row in
+                    row.value = Base64ImageHelper.getBase64DecodedImage(self.detailEvent.eventImage)
             }
             
             <<< TextRow("name").cellSetup { cell, row in
@@ -140,17 +143,14 @@ class EventDetailViewController: FormViewController {
         event.locationLatitude = location.coordinate.latitude
         event.locationLongitude = location.coordinate.longitude
         event.timestamp = Date()
-        print(eventForm["eventImage"])
-        print(eventForm["eventImage"] != nil)
         if let eventImage = eventForm["eventImage"] as? UIImage {
-            event.eventImage = (eventImage).toBase64()
+            event.eventImage = Base64ImageHelper.encodingImage(eventImage)
         }
         
         eventController.createEvent(event: event, completion: { (success) in
                 if let navController = self.navigationController {
                     navController.popViewController(animated: true)
                 }})
-        print(event)
     }
 }
 
