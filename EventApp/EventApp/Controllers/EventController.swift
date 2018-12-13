@@ -31,6 +31,16 @@ class EventController : RestController {
         })
     }
     
+    func updateEvent(event: Event, completion: @escaping (Bool) -> Void) {
+        put(resource: "events", event, onSuccess: {
+            print("Updated event")
+            completion(true)
+        }, onError: { error in
+            print(error)
+            completion(false)
+        })
+    }
+    
     func deleteEvent(eventId: CLong, completion: @escaping (Bool) -> Void) {
         delete(resource: resource + "/" + String(eventId), onSuccess: {
             completion(true)

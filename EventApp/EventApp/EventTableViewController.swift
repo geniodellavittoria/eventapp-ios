@@ -124,6 +124,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
                 controller.detailEvent = filteredEventList[indexPath.item]
                 controller.viewMode = true
+                controller.updateMode = true
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }

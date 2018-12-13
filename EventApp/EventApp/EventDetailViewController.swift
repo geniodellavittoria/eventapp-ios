@@ -23,6 +23,7 @@ class EventDetailViewController: FormViewController {
     var detailEvent = Event(name: "")
     
     var viewMode = false
+    var updateMode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,10 +150,20 @@ class EventDetailViewController: FormViewController {
             event.eventImage = Base64ImageHelper.encodingImage(eventImage)
         }
         
-        eventController.createEvent(event: event, completion: { (success) in
+        if updateMode {
+            eventController.updateEvent(event: event, completion: { success in
                 if let navController = self.navigationController {
                     navController.popViewController(animated: true)
-                }})
+                }
+            })
+        } else {
+            eventController.createEvent(event: event, completion: { success in
+                if let navController = self.navigationController {
+                    navController.popViewController(animated: true)
+                }
+            })
+        }
+        
     }
 }
 
