@@ -118,7 +118,7 @@ class EventDetailViewController: FormViewController {
     }
     
     private func isUserOwner() -> Bool {
-        return authService.userId == detailEvent.userId?.id || detailEvent.userId == nil;
+        return authService.userId == detailEvent.userId || detailEvent.userId == nil;
     }
     
     @objc func registerForEvent(_ sender: Any) {
@@ -154,6 +154,7 @@ class EventDetailViewController: FormViewController {
         event.locationLatitude = location.coordinate.latitude
         event.locationLongitude = location.coordinate.longitude
         event.timestamp = Date()
+        event.userId = authService.userId
         if let eventImage = eventForm["eventImage"] as? UIImage {
             event.eventImage = Base64ImageHelper.encodingImage(eventImage)
         }
@@ -161,7 +162,7 @@ class EventDetailViewController: FormViewController {
         if updateMode {
             eventController.updateEvent(event: event, completion: { success in
                 DispatchQueue.main.async {
-                if let navController = self.navigationController {
+                    if let navController = self.navigationController {
                         navController.popViewController(animated: true)
                     }
                     

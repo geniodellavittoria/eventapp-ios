@@ -180,7 +180,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         })
         
         let event = filteredEventList[indexPath.row]
-        if authService.userId == event.userId?.id {
+        if authService.userId == event.userId {
             let deleteTitle = NSLocalizedString("Delete", comment: "Delete")
             let deleteAction = UITableViewRowAction(style: .destructive, title: deleteTitle, handler: { (action, indexPath) in
                 self.deleteEvent(indexPath: indexPath)
