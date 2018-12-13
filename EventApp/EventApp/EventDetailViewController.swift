@@ -12,7 +12,7 @@ import ImageRow
 import CoreLocation
 
 class EventDetailViewController: FormViewController {
-
+    
     
     var category = ""
     var categoryOptions: [Category] = []
@@ -48,18 +48,20 @@ class EventDetailViewController: FormViewController {
                 $0.clearAction = .yes(style: UIAlertAction.Style.destructive)
                 }.cellSetup { cell, row in
                     row.value = Base64ImageHelper.getBase64DecodedImage(self.detailEvent.eventImage)
+                    row.baseCell.isUserInteractionEnabled = self.isUserOwner()
             }
             
             <<< TextRow("name").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
                 row.value = self.detailEvent.name
+                row.baseCell.isUserInteractionEnabled = self.isUserOwner()
                 }.onChange { row in
                     self.navigationItem.title = row.value
             }
             
             /*<<< TextRow("Location").cellSetup {
-                $1.cell.textField.placeholder = $0.row.tag
-            }*/
+             $1.cell.textField.placeholder = $0.row.tag
+             }*/
             
             <<< PushRow<String>("categoryId") {
                 $0.cellSetup { cell, row in
@@ -71,6 +73,7 @@ class EventDetailViewController: FormViewController {
                 $0.title = "Category"
                 $0.value = category
                 $0.options = categoryOptions.map({ $0.name })
+                $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
                 $0.onChange { [unowned self] row in
                     if let value = row.value {
                         self.category = value
@@ -91,22 +94,25 @@ class EventDetailViewController: FormViewController {
                 $0.tag = "description"
                 $0.placeholder = "Description"
                 $0.value = self.detailEvent.description
+                $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
         }
         
         form +++ Section("Details")
             <<< DateTimeRow("eventStart") {
                 $0.title = "Start"
                 $0.value = (self.detailEvent.eventStart ?? Date()).addingTimeInterval(60*60*24)
+                $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
             }
             
-            <<< DateTimeInlineRow("eventEnd"){
+            <<< DateTimeInlineRow("eventEnd") {
                 $0.title = "End"
                 $0.value = (self.detailEvent.eventEnd ?? Date()).addingTimeInterval(60*60*25)
+                $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
             }
             <<< LocationRow("location").cellSetup { cell, row in
                 row.title = "Location"
                 row.value = CLLocation(latitude: self.detailEvent.locationLatitude ?? 0, longitude: self.detailEvent.locationLongitude ?? 0)
-        
+                row.baseCell.isUserInteractionEnabled = self.isUserOwner()
         }
         
     }
@@ -136,12 +142,14 @@ class EventDetailViewController: FormViewController {
     
     @objc func saveEvent(_ sender: Any) {
         var eventForm = self.form.values()
-        var event = Event(name: eventForm["name"] as! String)
-        event.eventStart = eventForm["eventStart"] as! Date
-        event.eventEnd = eventForm["eventEnd"] as! Date
-        if let description = eventForm["description"]{
-            event.description = eventForm["description"] as! String
+        var event = Event(name: eventForm["name"] as? String ?? "")
+        if detailEvent.id != nil {
+            event.id = detailEvent.id;
         }
+        event.eventStart = eventForm["eventStart"] as? Date ?? nil
+        event.eventEnd = eventForm["eventEnd"] as? Date ?? nil
+        event.description = eventForm["description"] as? String ?? ""
+        
         let location = eventForm["location"] as! CLLocation
         event.locationLatitude = location.coordinate.latitude
         event.locationLongitude = location.coordinate.longitude
@@ -152,8 +160,11 @@ class EventDetailViewController: FormViewController {
         
         if updateMode {
             eventController.updateEvent(event: event, completion: { success in
+                DispatchQueue.main.async {
                 if let navController = self.navigationController {
-                    navController.popViewController(animated: true)
+                        navController.popViewController(animated: true)
+                    }
+                    
                 }
             })
         } else {
