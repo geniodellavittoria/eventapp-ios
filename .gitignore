@@ -77,4 +77,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-config.swift
+Config.swift
