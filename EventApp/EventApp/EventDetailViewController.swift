@@ -138,7 +138,9 @@ class EventDetailViewController: FormViewController {
         var event = Event(name: eventForm["name"] as! String)
         event.eventStart = eventForm["eventStart"] as! Date
         event.eventEnd = eventForm["eventEnd"] as! Date
-        event.description = eventForm["description"] as! String
+        if let description = eventForm["description"]{
+            event.description = eventForm["description"] as! String
+        }
         let location = eventForm["location"] as! CLLocation
         event.locationLatitude = location.coordinate.latitude
         event.locationLongitude = location.coordinate.longitude
