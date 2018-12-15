@@ -21,10 +21,9 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     
     var detailEvent = Event(name: "")
     
-    var viewMode = false
     var updateMode = false
-    var registered = false
-    var edited = false
+    var userRegistered = false
+    //var edited = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,24 +37,18 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         
         navigationItem.leftBarButtonItem = cancelBarButtonItem
         
-        if (isUserOwner()) {
+        
+        //isEdited()
+        
+        if isUserOwner() {
             self.navigationItem.rightBarButtonItem = saveBarButtonItem
-        } else if (viewMode) {
-            if registered {
+        } else {
+            if isUserRegistered() {
                 self.navigationItem.rightBarButtonItem = unregisterBarButtonItem
             } else {
                 self.navigationItem.rightBarButtonItem = registerBarButtonItem
             }
         }
-        
-        /*self.categoryController.getCategories(onSuccess: { categories in
-            self.categoryOptions = categories //.map({ EventDetailCategory(id: $0.id, value: $0.name) })
-            
-        }, onError: { error in
-            print(error)
-        })*/
-        
-        // Do any additional setup after loading the view.
         
         form +++ Section("General")
             <<< ImageRow("eventImage") {
@@ -98,7 +91,6 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                         }, onError: { error in
                             print(error)
                         })
-                        //row.options = self.categoryOptions.sorted(by: { $0.name > $1.name })
                 }
         }
         
@@ -109,7 +101,6 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                 row.baseCell.isUserInteractionEnabled = self.isUserOwner()
                 row.value = self.detailEvent.description
         }
-        
         
         form +++ Section("Details")
             <<< DateTimeRow("eventStart") {
@@ -147,17 +138,25 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         return authService.userId == detailEvent.userId || detailEvent.userId == nil;
     }
     
+    private func isUserRegistered() -> Bool {
+        return detailEvent.eventRegistrations?.contains(where: { $0.userId == authService.userId }) ?? false
+    }
+    
+    private func isEdited() -> Bool {
+        return detailEvent.id != nil
+    }
+    
     @objc func registerForEvent(_ sender: Any) {
         var eventRegistration: EventRegistration = EventRegistration()
         eventRegistration.eventRegistrationId = 1 // to register
         eventRegistration.userId = authService.userId
         eventRegistration.timestamp = Date.init()
         
-        eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, completion: { (success) in
-            if !success {
-                self.dismiss(animated: true, completion: nil)
+        eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, completion: { success in
+            if success {
+                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
             }
-            else{
+            else {
                 print("could not register for the event")
                 DispatchQueue.main.async {
                     let alert = UIAlertController(title: "Error", message: "Could not register for event.", preferredStyle: UIAlertController.Style.alert)
@@ -175,8 +174,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
             print("Cancel")
         }
-        let unregisterActionButton = UIAlertAction(title: "Unregister", style: .default)
-        { _ in
+        let unregisterActionButton = UIAlertAction(title: "Unregister", style: .default) { _ in
             self.unregisterFromEvent()
         }
         
@@ -189,7 +187,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     @objc func unregisterFromEvent() {
         eventController.unregisterEvent(eventId: detailEvent.id!, completion: { success in
             if success {
-                self.dismiss(animated: true, completion: nil)
+                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
             } else {
                 print("Could not unregister from event")
                 DispatchQueue.main.async {
@@ -219,17 +217,18 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         event.place = eventForm["place"] as? Int ?? 0
         event.timestamp = Date()
         event.userId = authService.userId
-        
-        print(event.eventStart)
+
         if let eventImage = eventForm["eventImage"] as? UIImage {
             event.eventImage = Base64ImageHelper.encodingImage(eventImage)
         }
+        
+        detailEvent = event
         
         if updateMode {
             eventController.updateEvent(event: event, completion: { success in
                 print(success)
                 if success {
-                    self.dismiss(animated: true, completion: nil)
+                    self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
                 } else {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "Error", message: "Could not update event.", preferredStyle: UIAlertController.Style.alert)
@@ -242,7 +241,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         } else {
             eventController.createEvent(event: event, completion: { success in
                 if success {
-                    self.dismiss(animated: true, completion: nil)
+                    self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
                 } else {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "Error", message: "Could not create event.", preferredStyle: UIAlertController.Style.alert)
@@ -254,6 +253,23 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "unwindEventDetailSegue" {
+            if let controller = segue.destination as? EventTableViewController {
+                print(userRegistered, updateMode)
+                let exists = controller.eventList.contains(where: { $0.id == self.detailEvent.id })
+                /*if exists {
+                    //controller.eventList.
+                }*/
+                if var event = controller.eventList.first(where: { $0.id == self.detailEvent.id }) {
+                    event = self.detailEvent
+                }
+                controller.tableView.reloadData()
+            }
+        }
+    }
+    
+
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

@@ -16,9 +16,8 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
-    private var filteredEventList = [Event]()
-    private var eventList = [Event]()
-    private var eventRegistrations: [EventRegistration] = [EventRegistration]()
+    var filteredEventList = [Event]()
+    var eventList = [Event]()
     
     private let eventController = EventController()
     private let eventRegistrationController = EventRegistrationController()
@@ -27,6 +26,11 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     
     let formatter = DateFormatter()
     let locationManager = LocationManager()
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //self.tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +51,6 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         }, onError: { error in
             print("could not load any events")
         })
-        
-        getEventRegistrations()
         
         if #available(iOS 11.0, *) {
             // For iOS 11 and later, place the search bar in the navigation bar.
@@ -105,14 +107,8 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let event = filteredEventList[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
-                controller.detailEvent = event
-                controller.viewMode = true
-                controller.updateMode = true
-                controller.registered = event.eventRegistrations?.contains(where: { $0.userId == authService.userId }) ?? false
-                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
-                controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.detailEvent = filteredEventList[indexPath.row]
             }
         }
     }
@@ -157,15 +153,9 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var actions = [UITableViewRowAction]()
-        let tagged = eventRegistrations.contains(where: { eventRegistration in
-            let event = filteredEventList[indexPath.row]
-            if (event.id == eventRegistration.eventId) {
-                return true;
-            }
-            return false;
-        })
-        
         let event = filteredEventList[indexPath.row]
+        let tagged = event.eventRegistrations?.contains(where: { $0.userId == authService.userId }) ?? false
+        
         if authService.userId == event.userId {
             let deleteTitle = NSLocalizedString("Delete", comment: "Delete")
             let deleteAction = UITableViewRowAction(style: .destructive, title: deleteTitle, handler: { (action, indexPath) in
@@ -307,54 +297,54 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             eventRegistration.timestamp = Date()
             eventRegistration.userId = authService.userId
             eventController.registerEvent(eventId: event.id!, eventRegistration: eventRegistration, completion: { (success) in
-                if (!success) {
+                if success {
+                    event.eventRegistrations?.append(eventRegistration)
+                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                } else {
                     DispatchQueue.main.async {
                         let alert = UIAlertController(title: "Error", message: "Could not tag event.", preferredStyle: UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                     }
-                } else {
-                    self.getEventRegistrations()
-                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                 }
             })
         }
     }
     
     func untagEvent(indexPath: IndexPath) {
-        let event = filteredEventList[indexPath.row]
+        var event = filteredEventList[indexPath.row]
         if event.id != nil {
             eventController.unregisterEvent(eventId: event.id!, completion: { (success) in
-                if !success {
-                    print("Could not unregister for event")
-                } else {
-                    self.getEventRegistrations()
+                if success {
+                    event.eventRegistrations?.removeAll(where: { $0.userId == authService.userId })
                     self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+                } else {
+                    print("Could not unregister for event")
+
                 }
             })
             
         }
     }
     
-    func getEventRegistrations() {
-        eventRegistrationController.getTaggingEventRegistrations(onSuccess: { eventRegistrations in
-            self.eventRegistrations = eventRegistrations
-            print(eventRegistrations)
-        }, onError: { error in
-            print(error)
-        })
-    }
-    
     func deleteEvent(indexPath: IndexPath) {
         let event = filteredEventList[indexPath.row]
         if event.id != nil {
             eventController.deleteEvent(eventId: event.id!, completion: { success in
-                if !success {
+                if success {
+                    self.filteredEventList.removeAll(where: { $0.id == event.id })
+                    self.eventList.removeAll(where: { $0.id == event.id })
+                } else {
                     print("Could not delete event" + String(event.id!))
                 }
             })
         }
     }
+    
+    @IBAction func unwindToEventTableView(_ sender: UIStoryboardSegue) {
+        print("unwind")
+    }
+    
     
 }
 

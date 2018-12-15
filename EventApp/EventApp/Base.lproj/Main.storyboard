@@ -174,10 +174,15 @@
                         <viewLayoutGuide key="safeArea" id="0gz-KV-Asm"/>
                     </view>
                     <navigationItem key="navigationItem" id="mEE-MI-bNN">
-                        <barButtonItem key="rightBarButtonItem" id="2N9-a1-pPi"/>
+                        <barButtonItem key="rightBarButtonItem" id="2N9-a1-pPi">
+                            <connections>
+                                <segue destination="lWp-w5-IZD" kind="unwind" identifier="unwindEventDetailSegue" unwindAction="unwindToEventTableView:" id="4Rk-sA-it1"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f8i-iO-mvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="lWp-w5-IZD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1959" y="1889"/>
         </scene>
