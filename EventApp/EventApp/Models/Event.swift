@@ -23,6 +23,8 @@ struct Event: Codable {
     var category: Category?
     var categoryId: CLong?
     var userId: CLong?
+    var place: Int?
+    var eventRegistrations: [EventRegistration]?
     //var impression: [UIImage]?
     
     init(name: String) {

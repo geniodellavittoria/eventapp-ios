@@ -32,7 +32,7 @@ class EventController : RestController {
     }
     
     func updateEvent(event: Event, completion: @escaping (Bool) -> Void) {
-        put(resource: "events", event, onSuccess: {
+        put(resource: "event", event, onSuccess: {
             print("Updated event")
             completion(true)
         }, onError: { error in

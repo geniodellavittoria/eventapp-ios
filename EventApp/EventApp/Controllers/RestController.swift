@@ -30,6 +30,7 @@ class RestController {
         sessionManager.adapter = accessTokenAdapter
         
         decoder.dateDecodingStrategy = .iso8601
+        encoder.dateEncodingStrategy = .iso8601
     }
     
     /*func getAll<T>(resource: String) {

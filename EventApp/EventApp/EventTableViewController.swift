@@ -86,45 +86,31 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
          */
         definesPresentationContext = true
         
-        
-        if let split = splitViewController {
-            let controllers = split.viewControllers
-            detailViewController = EventDetailViewController()
-        }
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if splitViewController!.isCollapsed {
-            if let selectionIndexPath = tableView.indexPathForSelectedRow {
-                tableView.deselectRow(at: selectionIndexPath, animated: animated)
-            }
-        }
         super.viewWillAppear(animated)
+        
+        if let selectionIndexPath = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectionIndexPath, animated: animated)
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - Split View
-    func splitViewController(
-        _ splitViewController: UISplitViewController,
-        collapseSecondary secondaryViewController: UIViewController,
-        onto primaryViewController: UIViewController) -> Bool {
-        // Return true to prevent UIKit from applying its default behavior
-        return true
-    }
-    
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                print("indexPath " + String(indexPath.item))
-                //let object = objects[indexPath.row] as! NSDate
+                let event = filteredEventList[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
-                controller.detailEvent = filteredEventList[indexPath.item]
+                controller.detailEvent = event
                 controller.viewMode = true
                 controller.updateMode = true
+                controller.registered = event.eventRegistrations?.contains(where: { $0.userId == authService.userId }) ?? false
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }

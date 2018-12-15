@@ -9,6 +9,7 @@
 import Foundation
 
 struct EventRegistration : Codable {
+    var id: CLong?
     var timestamp: Date?
     var eventRegistrationId: CLong?
     var userId: CLong?
