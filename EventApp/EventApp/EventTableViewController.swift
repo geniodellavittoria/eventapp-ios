@@ -12,7 +12,8 @@ import CoreLocation
 
 //UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating
 class EventTableViewController : UITableViewController,
-UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
+UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventChangedDelegate {
+
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
@@ -34,6 +35,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         locationManager.startTracking()     
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -109,6 +111,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 let controller = (segue.destination as! UINavigationController).topViewController as! EventDetailViewController
                 controller.detailEvent = filteredEventList[indexPath.row]
+                controller.delegate = self
             }
         }
     }
@@ -341,8 +344,23 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating{
         }
     }
     
+    func eventChanged(event: Event?) {
+        if event != nil {
+            if let index = eventList.firstIndex(where: { $0.id == event!.id }) {
+                eventList[index] = event!
+            } else {
+                eventList.append(event!)
+            }
+            if (searchController.searchBar.text?.isEmpty) != nil {
+                searchController.searchBar.text = searchController.searchBar.text;
+            }
+            self.tableView.reloadData()
+            
+        }
+    }
+    
     @IBAction func unwindToEventTableView(_ sender: UIStoryboardSegue) {
-        print("unwind")
+
     }
     
     

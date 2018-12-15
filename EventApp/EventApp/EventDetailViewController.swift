@@ -11,7 +11,13 @@ import Eureka
 import ImageRow
 import CoreLocation
 
+protocol EventChangedDelegate: class {
+    func eventChanged(event: Event?)
+}
+
 class EventDetailViewController: FormViewController, UIActionSheetDelegate {
+    weak var delegate: EventChangedDelegate?
+    
     let formatter = DateFormatter()
     var category = ""
     var categoryOptions: [Category] = []
@@ -21,12 +27,11 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     
     var detailEvent = Event(name: "")
     
-    var updateMode = false
     var userRegistered = false
-    //var edited = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         formatter.dateFormat = "yyyy-MM-dd"
         
@@ -36,9 +41,6 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         
         navigationItem.leftBarButtonItem = cancelBarButtonItem
-        
-        
-        //isEdited()
         
         if isUserOwner() {
             self.navigationItem.rightBarButtonItem = saveBarButtonItem
@@ -154,6 +156,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         
         eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, completion: { success in
             if success {
+                
                 self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
             }
             else {
@@ -187,6 +190,8 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     @objc func unregisterFromEvent() {
         eventController.unregisterEvent(eventId: detailEvent.id!, completion: { success in
             if success {
+                self.detailEvent.eventRegistrations?.removeAll(where: { $0.userId == authService.userId })
+                self.delegate?.eventChanged(event: self.detailEvent)
                 self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
             } else {
                 print("Could not unregister from event")
@@ -224,51 +229,41 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         
         detailEvent = event
         
-        if updateMode {
-            eventController.updateEvent(event: event, completion: { success in
-                print(success)
-                if success {
-                    self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
-                } else {
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Error", message: "Could not update event.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-                
-            })
+        if isEdited() {
+            updateEvent(event)
         } else {
-            eventController.createEvent(event: event, completion: { success in
-                if success {
-                    self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
-                } else {
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Error", message: "Could not create event.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            })
+            createEvent(event)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindEventDetailSegue" {
-            if let controller = segue.destination as? EventTableViewController {
-                print(userRegistered, updateMode)
-                let exists = controller.eventList.contains(where: { $0.id == self.detailEvent.id })
-                /*if exists {
-                    //controller.eventList.
-                }*/
-                if var event = controller.eventList.first(where: { $0.id == self.detailEvent.id }) {
-                    event = self.detailEvent
+    func updateEvent(_ event: Event) {
+        eventController.updateEvent(event: event, completion: { success in
+            if success {
+                self.delegate?.eventChanged(event: self.detailEvent)
+                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
+            } else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Could not update event.", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
-                controller.tableView.reloadData()
             }
-        }
+        })
     }
     
+    func createEvent(_ event: Event) {
+        eventController.createEvent(event: event, completion: { success in
+            if success {
+                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
+            } else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Could not create event.", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
 
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
