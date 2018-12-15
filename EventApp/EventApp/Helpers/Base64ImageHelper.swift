@@ -18,7 +18,9 @@ class Base64ImageHelper {
         let decodedData = Data(base64Encoded: data!, options: NSData.Base64DecodingOptions(rawValue: 0))
         
         if let decodedData = decodedData as? Data {
-            return UIImage(data: decodedData)!
+            if !decodedData.isEmpty {
+                return UIImage(data: decodedData)!
+            }
         }
         return UIImage()
     }
