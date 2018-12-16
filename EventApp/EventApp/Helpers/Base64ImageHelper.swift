@@ -10,6 +10,21 @@ import Foundation
 import UIKit
 
 class Base64ImageHelper {
+    //
+    // Convert UIImage to a base64 representation
+    //
+    class func convertImageToBase64(image: UIImage) -> String {
+        let imageData = image.pngData()!
+        return imageData.base64EncodedString(options: Data.Base64EncodingOptions.lineLength64Characters)
+    }
+    
+    //
+    // Convert a base64 representation to a UIImage
+    //
+    class func convertBase64ToImage(imageString: String) -> UIImage {
+        let imageData = Data(base64Encoded: imageString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters)!
+        return UIImage(data: imageData)!
+    }
     
     static func getBase64DecodedImage(_ data: String?) -> UIImage {
         if (data == nil) {
@@ -31,4 +46,15 @@ class Base64ImageHelper {
         }
         return "";
     }
+}
+
+
+
+extension UIImage {
+    
+    func convertToBase64() -> String {
+        return self.toBase64() as? String ?? ""
+    }
+    
+    
 }

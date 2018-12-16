@@ -126,7 +126,9 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
         let cell = tableView.dequeueReusableCell(withIdentifier: "EventCell", for: indexPath) as! EventTableViewCell
         if (!filteredEventList.isEmpty) {
             let event = filteredEventList[indexPath.row]
-            cell.eventImage?.image = Base64ImageHelper.getBase64DecodedImage(event.eventImage)
+            if (event.eventImage as! String! != nil && !event.eventImage!.isEmpty ?? false) {
+                cell.eventImage?.image = Base64ImageHelper.convertBase64ToImage(imageString: event.eventImage!)
+            }
             cell.eventTitleLbl?.text = event.name
             cell.eventCategoryLbl?.text  = event.category?.name
             cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)

@@ -23,57 +23,49 @@ class RegistrationViewController : FormViewController {
             <<< TextRow(){
                 $0.tag = "login"
                 $0.title = "Username"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "Username"
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnChangeAfterBlurred
                 }
                 .cellUpdate { cell, row in
-                    if !row.isValid {
-                        cell.titleLabel?.textColor = .red
-                    }
+                    FormValidation.validateField(cell: cell, row: row)
             }
             <<< TextRow(){
                 $0.tag = "firstName"
                 $0.title = "First Name"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "First Name"
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnChangeAfterBlurred
                 }
                 .cellUpdate { cell, row in
-                    if !row.isValid {
-                        cell.titleLabel?.textColor = .red
-                    }
+                    FormValidation.validateField(cell: cell, row: row)
             }
             <<< TextRow(){
                 $0.tag = "lastName"
                 $0.title = "Last Name"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "Last Name"
                 $0.add(rule: RuleRequired())
                 $0.validationOptions = .validatesOnChangeAfterBlurred
                 }
                 .cellUpdate { cell, row in
-                    if !row.isValid {
-                        cell.titleLabel?.textColor = .red
-                    }
+                    FormValidation.validateField(cell: cell, row: row)
         }
         form +++ Section("")
             <<< TextRow(){
                 $0.tag = "email"
                 $0.title = "Email"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "Email"
                 $0.add(rule: RuleRequired())
                 $0.add(rule: RuleEmail())
                 $0.validationOptions = .validatesOnChangeAfterBlurred
                 }
                 .cellUpdate { cell, row in
-                    if !row.isValid {
-                        cell.titleLabel?.textColor = .red
-                    }
+                    FormValidation.validateField(cell: cell, row: row)
             }
             <<< PasswordRow(){
                 $0.tag = "password"
                 $0.title = "Password"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "Password"
                 $0.add(rule: RuleRequired())
                 $0.add(rule: RuleMinLength(minLength: 5))
                 $0.validationOptions = .validatesOnChangeAfterBlurred
@@ -86,7 +78,7 @@ class RegistrationViewController : FormViewController {
             <<< PasswordRow(){
                 $0.tag = "confirmPassword"
                 $0.title = "Confirm Password"
-                $0.placeholder = "Enter text here"
+                $0.placeholder = "Rewrite Password"
                 $0.add(rule: RuleRequired())
                 $0.add(rule: RuleMinLength(minLength: 5))
                 $0.validationOptions = .validatesOnChangeAfterBlurred

@@ -63,16 +63,20 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
             <<< TextRow("name").cellSetup { cell, row in
                 cell.textField.placeholder = row.tag
                 row.title = "Name"
+                row.placeholder = "Name"
+                row.add(rule: RuleRequired())
                 row.value = self.detailEvent.name
                 row.baseCell.isUserInteractionEnabled = self.isUserOwner()
-                }.onChange { row in
+                }.cellUpdate { cell, row in
                     self.navigationItem.title = row.value
+                    FormValidation.validateField(cell: cell, row: row)
             }
             
             <<< PushRow<Category>("categoryId") {
                 $0.title = "Category"
                 $0.value = detailEvent.category
                 $0.options = categoryOptions
+                $0.add(rule: RuleRequired())
                 $0.displayValueFor = {
                     guard let category = $0 else { return nil }
                     return category.name
@@ -90,7 +94,11 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                         }, onError: { error in
                             print(error)
                         })
+                        
+                    }.onPresent { form, selectorController in
+                        selectorController.enableDeselection = false
                 }
+
         }
         
         form +++ Section("Description")
@@ -99,19 +107,27 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                 row.placeholder = "Description"
                 row.baseCell.isUserInteractionEnabled = self.isUserOwner()
                 row.value = self.detailEvent.description
+                }.cellUpdate { cell, row in
+                    //FormValidation.validateField(cell: cell, row: row)
         }
         
         form +++ Section("Details")
             <<< DateTimeRow("eventStart") {
                 $0.title = "Start"
+                $0.add(rule: RuleRequired())
                 $0.value = (self.detailEvent.eventStart ?? Date()).addingTimeInterval(60*60*24)
                 $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
+                }.cellUpdate { (cell, row) in
+                    row.minimumDate = Date()
             }
             
             <<< DateTimeInlineRow("eventEnd") {
                 $0.title = "End"
+                $0.add(rule: RuleRequired())
                 $0.value = (self.detailEvent.eventEnd ?? Date()).addingTimeInterval(60*60*25)
                 $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
+                }.cellUpdate { (cell, row) in
+                    row.minimumDate = Date()
             }
             <<< LocationRow("location").cellSetup { cell, row in
                 row.title = "Location"

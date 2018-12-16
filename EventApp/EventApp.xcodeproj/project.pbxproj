@@ -14,6 +14,7 @@
 		501658BB21AA37DC0041242C /* FormValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501658BA21AA37DC0041242C /* FormValidation.swift */; };
 		501E970C21C028D800689B0C /* EventRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501E970B21C028D800689B0C /* EventRegistration.swift */; };
 		501E970E21C0684800689B0C /* EventRegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501E970D21C0684800689B0C /* EventRegistrationController.swift */; };
+		502F500D21C5DB680029000C /* EurekaFormExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502F500C21C5DB670029000C /* EurekaFormExtension.swift */; };
 		504B409321C2E75000AFB819 /* Base64ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B409221C2E75000AFB819 /* Base64ImageHelper.swift */; };
 		505FBD4E219F906E007A0914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD4D219F906E007A0914 /* AppDelegate.swift */; };
 		505FBD50219F906E007A0914 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505FBD4F219F906E007A0914 /* ViewController.swift */; };
@@ -78,6 +79,7 @@
 		501658BA21AA37DC0041242C /* FormValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidation.swift; sourceTree = "<group>"; };
 		501E970B21C028D800689B0C /* EventRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRegistration.swift; sourceTree = "<group>"; };
 		501E970D21C0684800689B0C /* EventRegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRegistrationController.swift; sourceTree = "<group>"; };
+		502F500C21C5DB670029000C /* EurekaFormExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EurekaFormExtension.swift; sourceTree = "<group>"; };
 		504B409221C2E75000AFB819 /* Base64ImageHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64ImageHelper.swift; sourceTree = "<group>"; };
 		504CD6CE21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		504CD6CF21A4707F00F46CBE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				5061BE2821AF18120068D39E /* DictionaryEncoder.swift */,
 				50E2B18421B15F420071DE51 /* JSONEncoding.swift */,
 				504B409221C2E75000AFB819 /* Base64ImageHelper.swift */,
+				502F500C21C5DB670029000C /* EurekaFormExtension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 			files = (
 				50E2B18321B03D5A0071DE51 /* SettingsController.swift in Sources */,
 				5062DD3421A32E71000F63BD /* EventTableViewCell.swift in Sources */,
+				502F500D21C5DB680029000C /* EurekaFormExtension.swift in Sources */,
 				826E374421BDB07900419519 /* LocationManager.swift in Sources */,
 				505FBD7F219F9100007A0914 /* LoginViewController.swift in Sources */,
 				501658AC21A9BFC70041242C /* JwtToken.swift in Sources */,
