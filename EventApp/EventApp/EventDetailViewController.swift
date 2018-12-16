@@ -98,7 +98,6 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                     }.onPresent { form, selectorController in
                         selectorController.enableDeselection = false
                 }
-
         }
         
         form +++ Section("Description")
@@ -140,13 +139,33 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                 row.value = self.detailEvent.price ?? 0
                 row.baseCell.isUserInteractionEnabled = self.isUserOwner()
             }
-            <<< IntRow("places").cellSetup { cell, row in
-                cell.textField.placeholder = "Place"
-                row.title = "Place"
-                row.value = self.detailEvent.place
-                row.baseCell.isUserInteractionEnabled = self.isUserOwner()
+            <<< SwitchRow("placeSwitch") {
+                $0.title = "Limit place"
+                $0.value = self.isUserOwner() && (self.detailEvent.place ?? 0) > 0
+                $0.baseCell.isUserInteractionEnabled = self.isUserOwner()
+                $0.hidden = Condition.function(["placeSwitch"], { form in
+                    return !self.isUserOwner()
+                })
+            }
+            <<< IntRow("place") {
+                $0.hidden = Condition.function(["placeSwitch"], { form in
+                    return !((form.rowBy(tag: "placeSwitch") as? SwitchRow)?.value ?? true)
+                })
+                }.cellSetup { cell, row in
+                    cell.textField.placeholder = "Place"
+                    row.title = "Place"
+                    row.value = self.detailEvent.place
+                    row.baseCell.isUserInteractionEnabled = self.isUserOwner()
         }
-        
+            <<< IntRow("freePlace") {
+                $0.hidden = Condition.function(["placeSwitch"], { form in
+                    return (!((form.rowBy(tag: "placeSwitch") as? SwitchRow)?.value ?? true) && self.detailEvent.freePlace == nil) && self.isUserOwner()
+                })
+                }.cellSetup { cell, row in
+                    row.title = "Free Place"
+                    row.value = self.detailEvent.freePlace
+                    row.baseCell.isUserInteractionEnabled = false
+        }
     }
     
     private func isUserOwner() -> Bool {
@@ -168,6 +187,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         eventRegistration.timestamp = Date.init()
         
         eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, onSuccess: { registration in
+            self.reduceFreePlace()
             var event = self.detailEvent
             event.eventRegistrations?.append(registration)
             self.delegate?.eventChanged(event: event)
@@ -183,8 +203,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         })
     }
     
-    @objc func unregisterActionSheet()
-    {
+    @objc func unregisterActionSheet() {
         let unregisterAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
@@ -203,6 +222,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     @objc func unregisterFromEvent() {
         eventController.unregisterEvent(eventId: detailEvent.id!, completion: { success in
             if success {
+                self.incrementFreePlace()
                 self.detailEvent.eventRegistrations?.removeAll(where: { $0.userId == authService.userId })
                 self.delegate?.eventChanged(event: self.detailEvent)
                 self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
@@ -232,7 +252,17 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         event.locationLongitude = location.coordinate.longitude
         event.category = eventForm["categoryId"] as? Category ?? nil
         event.price = eventForm["price"] as? Double ?? 0
-        event.place = eventForm["place"] as? Int ?? 0
+        if let placeSwitch = eventForm["placeSwitch"] as? Bool {
+            if placeSwitch {
+                event.place = eventForm["place"] as? Int ?? 0
+                if event.freePlace == nil {
+                    event.freePlace = event.place
+                }
+            } else {
+                event.place = 0
+                event.freePlace = nil
+            }
+        }
         event.timestamp = Date()
         event.userId = authService.userId
         
@@ -277,6 +307,18 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
                 self.present(alert, animated: true, completion: nil)
             }
         })
+    }
+    
+    func reduceFreePlace() {
+        if detailEvent.freePlace != nil {
+            detailEvent.freePlace! -= 1
+        }
+    }
+    
+    func incrementFreePlace() {
+        if detailEvent.freePlace != nil {
+            detailEvent.freePlace! += 1
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {

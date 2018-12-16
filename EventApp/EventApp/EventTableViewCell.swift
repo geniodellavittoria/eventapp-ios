@@ -16,7 +16,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var eventPriceLbl: UILabel!
     @IBOutlet weak var eventCategoryLbl: UILabel!
     @IBOutlet weak var eventImage: UIImageView!
-    @IBOutlet weak var evenLocationLbl: UILabel!
+    @IBOutlet weak var eventLocationLbl: UILabel!
     @IBOutlet weak var eventTitleLbl: UILabel!
     
     

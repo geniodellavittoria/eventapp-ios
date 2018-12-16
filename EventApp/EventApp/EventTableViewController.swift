@@ -133,6 +133,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
             cell.eventCategoryLbl?.text  = event.category?.name
             cell.eventTimeFromLbl.text = self.formatter.string(from: event.eventStart!)
             cell.eventTimeToLbl.text = self.formatter.string(from: event.eventEnd!)
+            getLocationInformation(label: cell.eventLocationLbl, latitude: event.locationLatitude, longitude: event.locationLongitude)
             
             let formatter = NumberFormatter()
             formatter.locale = Locale.current
@@ -354,6 +355,34 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
             
             self.tableView.reloadData()
             
+        }
+    }
+    
+    func getLocationInformation(label: UILabel,latitude: Double?, longitude: Double?) {
+        if latitude != nil && longitude != nil {
+            let geoCoder = CLGeocoder()
+            let location = CLLocation(latitude: latitude!, longitude: longitude!)
+            geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                var locationText: String = ""
+                // Place details
+                guard let placeMark = placemarks?.first else {
+                    return
+                }
+                
+                // City
+                if let city = placeMark.subAdministrativeArea {
+                    locationText += city
+                }
+                
+                // Country
+                if let country = placeMark.country {
+                    if !locationText.isEmpty {
+                        locationText += ", "
+                    }
+                    locationText += country
+                }
+                label.text = locationText
+            })
         }
     }
     

@@ -24,6 +24,7 @@ struct Event: Codable {
     var categoryId: CLong?
     var userId: CLong?
     var place: Int?
+    var freePlace: Int?
     var eventRegistrations: [EventRegistration]?
     //var impression: [UIImage]?
     
