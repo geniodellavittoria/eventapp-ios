@@ -180,7 +180,6 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
             actions.append(taggingAction)
         }
         return actions
-        
     }
     
     
@@ -298,7 +297,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
             eventRegistration.timestamp = Date()
             eventRegistration.userId = authService.userId
             eventController.registerEvent(eventId: event.id!, eventRegistration: eventRegistration, onSuccess: { registration in
-                event.eventRegistrations?.append(eventRegistration)
+                self.filteredEventList[indexPath.row].eventRegistrations?.append(eventRegistration)
                 self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
             }, onError: { error in
                 print(error)
@@ -316,7 +315,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
         if event.id != nil {
             eventController.unregisterEvent(eventId: event.id!, completion: { (success) in
                 if success {
-                    event.eventRegistrations?.removeAll(where: { $0.userId == authService.userId })
+                    self.filteredEventList[indexPath.row].eventRegistrations?.removeAll(where: { $0.userId == authService.userId })
                     self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                 } else {
                     print("Could not unregister for event")
