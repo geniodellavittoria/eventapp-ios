@@ -27,11 +27,8 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     
     var detailEvent = Event(name: "")
     
-    var userRegistered = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         formatter.dateFormat = "yyyy-MM-dd"
         
@@ -154,18 +151,18 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         eventRegistration.userId = authService.userId
         eventRegistration.timestamp = Date.init()
         
-        eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, completion: { success in
-            if success {
-                
-                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
-            }
-            else {
-                print("could not register for the event")
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Error", message: "Could not register for event.", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
+        eventController.registerEvent(eventId: detailEvent.id!, eventRegistration: eventRegistration, onSuccess: { registration in
+            var event = self.detailEvent
+            event.eventRegistrations?.append(registration)
+            self.delegate?.eventChanged(event: event)
+            self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
+            
+        }, onError: { error in
+            print(error)
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Error", message: "Could not register for event.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         })
     }
@@ -183,7 +180,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         
         unregisterAlertController.addAction(cancelActionButton)
         unregisterAlertController.addAction(unregisterActionButton)
-
+        
         self.present(unregisterAlertController, animated: true, completion: nil)
     }
     
@@ -222,7 +219,7 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
         event.place = eventForm["place"] as? Int ?? 0
         event.timestamp = Date()
         event.userId = authService.userId
-
+        
         if let eventImage = eventForm["eventImage"] as? UIImage {
             event.eventImage = Base64ImageHelper.encodingImage(eventImage)
         }
@@ -252,19 +249,20 @@ class EventDetailViewController: FormViewController, UIActionSheetDelegate {
     }
     
     func createEvent(_ event: Event) {
-        eventController.createEvent(event: event, completion: { success in
-            if success {
-                self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
-            } else {
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Error", message: "Could not create event.", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
+        eventController.createEvent(event: event, onSuccess: { event in
+            self.delegate?.eventChanged(event: event)
+            self.performSegue(withIdentifier: "unwindEventDetailSegue", sender: self)
+            
+        }, onError: { error in
+            print(error)
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Error", message: "Could not create event.", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         })
     }
-
+    
     @IBAction func cancel(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

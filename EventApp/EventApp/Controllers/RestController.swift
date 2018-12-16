@@ -104,7 +104,14 @@ class RestController {
 
         Alamofire.request(request)
             .responseObject(completionHandler: { (response: DataResponse<Res>) in
-                onSuccess(response.value! as Res)
+                print(response.value)
+                if let res = response.value as? Res {
+                    onSuccess(res)
+                } else {
+                    
+                    onError(RESTError.DeserializingError())
+                }
+                
         })
         
     }

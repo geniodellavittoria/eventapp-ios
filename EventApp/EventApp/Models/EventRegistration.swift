@@ -14,4 +14,5 @@ struct EventRegistration : Codable {
     var eventRegistrationId: CLong?
     var userId: CLong?
     var eventId: CLong?
+    var place: Int?
 }

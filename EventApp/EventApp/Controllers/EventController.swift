@@ -21,13 +21,11 @@ class EventController : RestController {
         })
     }
     
-    func createEvent(event: Event, completion: @escaping (Bool) -> Void) {
-        post(resource: "events", event, onSuccess: {
-            print("Create Event successfully")
-            completion(true)
+    func createEvent(event: Event, onSuccess: @escaping (Event) -> Void, onError: @escaping (Error) -> Void) {
+        post(resource: "events", event, response: Event.self, onSuccess: { event in
+            onSuccess(event)
         }, onError: { error in
-            print(error)
-            completion(false)
+            onError(error)
         })
     }
     
@@ -50,12 +48,12 @@ class EventController : RestController {
         })
     }
     
-    func registerEvent(eventId: CLong, eventRegistration: EventRegistration, completion: @escaping (Bool) -> Void) {
-        post(resource: resource + "/" + String(eventId) + "/register", eventRegistration, onSuccess: {
-            completion(true)
+    func registerEvent(eventId: CLong, eventRegistration: EventRegistration, onSuccess: @escaping (EventRegistration) -> Void, onError: @escaping (Error) -> Void) {
+        post(resource: resource + "/" + String(eventId) + "/register", eventRegistration, response: EventRegistration.self,
+             onSuccess: { registration in
+                onSuccess(registration)
         }, onError: { error in
-            print(error)
-            completion(false)
+            onError(error)
         })
     }
     

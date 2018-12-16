@@ -13,7 +13,7 @@ import CoreLocation
 //UISearchControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating
 class EventTableViewController : UITableViewController,
 UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventChangedDelegate {
-
+    
     @IBOutlet weak var searchFooter: UISearchBar!
     
     var detailViewController: EventDetailViewController? = nil
@@ -27,11 +27,6 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
     
     let formatter = DateFormatter()
     let locationManager = LocationManager()
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //self.tableView.reloadData()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,7 +85,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
          */
         definesPresentationContext = true
         
-    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -299,16 +294,15 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
             eventRegistration.eventRegistrationId = 2
             eventRegistration.timestamp = Date()
             eventRegistration.userId = authService.userId
-            eventController.registerEvent(eventId: event.id!, eventRegistration: eventRegistration, completion: { (success) in
-                if success {
-                    event.eventRegistrations?.append(eventRegistration)
-                    self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
-                } else {
-                    DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Error", message: "Could not tag event.", preferredStyle: UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
+            eventController.registerEvent(eventId: event.id!, eventRegistration: eventRegistration, onSuccess: { registration in
+                event.eventRegistrations?.append(eventRegistration)
+                self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
+            }, onError: { error in
+                print(error)
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Could not tag event.", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 }
             })
         }
@@ -323,7 +317,7 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
                     self.tableView.reloadRows(at: [indexPath], with: UITableView.RowAnimation.none)
                 } else {
                     print("Could not unregister for event")
-
+                    
                 }
             })
             
@@ -348,19 +342,21 @@ UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, EventC
         if event != nil {
             if let index = eventList.firstIndex(where: { $0.id == event!.id }) {
                 eventList[index] = event!
+                let filterIndex = filteredEventList.firstIndex(where: { $0.id == event!.id })
+                if filterIndex != nil {
+                    filteredEventList[filterIndex!] = event!
+                }
             } else {
                 eventList.append(event!)
             }
-            if (searchController.searchBar.text?.isEmpty) != nil {
-                searchController.searchBar.text = searchController.searchBar.text;
-            }
+            
             self.tableView.reloadData()
             
         }
     }
     
     @IBAction func unwindToEventTableView(_ sender: UIStoryboardSegue) {
-
+        
     }
     
     
